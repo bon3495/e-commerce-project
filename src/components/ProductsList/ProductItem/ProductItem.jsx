@@ -2,6 +2,7 @@ import { Button, IconButton } from '@material-ui/core';
 import { FavoriteBorderOutlined, SearchOutlined } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ProductTop = styled.div`
   position: relative;
@@ -18,6 +19,7 @@ const Image = styled.img`
   height: auto;
   object-fit: contain;
   display: flex;
+  transition: all 0.3s linear;
 `;
 
 const ButtonContainer = styled.div`
@@ -34,8 +36,8 @@ const Socials = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 20px;
+  left: 20px;
   row-gap: 10px;
   z-index: 2;
 `;
@@ -82,9 +84,10 @@ const NewPrice = styled.div`
   font-size: 18px;
   font-weight: 500;
   margin-right: 8px;
+  color: #ec0101;
 `;
 
-const Container = styled.div`
+const Container = styled(Link)`
   width: calc(25% - 30px);
   margin-left: 30px;
   overflow: hidden;
@@ -101,33 +104,55 @@ const Container = styled.div`
     opacity: 1;
   }
 
+  &:hover ${Image} {
+    transform: scale(1.05);
+  }
+
+  &:hover .social-button {
+    color: white;
+  }
+
   display: flex;
   flex-direction: column;
 `;
 
 const ProductItem = ({ product }) => {
+  const handleAddToCart = e => {
+    e.preventDefault();
+  };
+
   return (
-    <Container>
+    <Container to={`/product/${product.id}`}>
       <ProductTop>
         <ImageWrap>
           <Image src={product.img} alt={product.name} />
         </ImageWrap>
         <ButtonContainer>
           <Socials>
-            <IconButton size="small">
+            <IconButton
+              className="social-button"
+              size="small"
+              onClick={handleAddToCart}
+            >
               <SearchOutlined />
             </IconButton>
-            <IconButton size="small">
+            <IconButton
+              className="social-button"
+              size="small"
+              onClick={handleAddToCart}
+            >
               <FavoriteBorderOutlined />
             </IconButton>
           </Socials>
           <ButtonWrap>
             <Button
               className="addButton"
-              size="large"
+              // size="large"
               variant="contained"
               style={{ borderRadius: 20 }}
               fullWidth
+              // endIcon={<AddShoppingCartOutlined />}
+              onClick={handleAddToCart}
             >
               Add To Cart
             </Button>

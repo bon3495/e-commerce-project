@@ -59,9 +59,13 @@ const Right = styled.div`
 `;
 
 const MenuItem = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   margin-right: 25px;
+  &:hover {
+    color: #3f51b5;
+  }
+  transition: all 0.3s linear;
 `;
 
 const Navbar = () => {

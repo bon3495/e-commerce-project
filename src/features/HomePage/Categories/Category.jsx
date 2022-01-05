@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ImageContainer = styled.div``;
 
@@ -44,9 +45,9 @@ const ButtonContainer = styled.div`
   /* opacity: 0; */
   transform: translateY(100%);
   transition: all 0.3s linear;
-  left: 0;
-  right: 0;
-  padding: 0 30px;
+  /* left: 0;
+  right: 0; */
+  /* padding: 0 30px; */
   position: absolute;
 `;
 
@@ -65,6 +66,9 @@ const ListItem = styled.div`
 `;
 
 const Category = ({ category }) => {
+  const handleClick = id => {
+    console.log(id);
+  };
   return (
     <ListItem key={category.id}>
       <ImageContainer>
@@ -75,12 +79,15 @@ const Category = ({ category }) => {
         <ButtonContainer>
           <Button
             variant="contained"
-            color="default"
+            color="primary"
             size="large"
-            fullWidth
+            // fullWidth
             style={{ borderRadius: 20 }}
+            onClick={() => handleClick(category.id)}
+            component={Link}
+            to={`/product-category/${category.id}`}
           >
-            Shop Now
+            Go Now!
           </Button>
         </ButtonContainer>
       </Info>
