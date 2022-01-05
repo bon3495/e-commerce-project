@@ -6,7 +6,7 @@ import {
 } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
-import TitleContainer from '../../../components/TitleContainer/TitleContainer';
+import TitleContainer from '../TitleContainer/TitleContainer';
 
 const Container = styled.div`
   padding: 30px 15px 45px;

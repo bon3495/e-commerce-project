@@ -104,6 +104,8 @@ export const products = [
     name: 'Simple Black T-Shirt',
     price: '$48.00',
     originPrice: '$68.00',
+    img_detail:
+      'https://template.hasthemes.com/norda/norda/assets/images/product-details/b-large-1.jpg',
   },
   {
     id: 8,

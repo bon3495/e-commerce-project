@@ -85,7 +85,7 @@ const Category = ({ category }) => {
             style={{ borderRadius: 20 }}
             onClick={() => handleClick(category.id)}
             component={Link}
-            to={`/product-category/${category.id}`}
+            to={`/category/${category.id}`}
           >
             Go Now!
           </Button>

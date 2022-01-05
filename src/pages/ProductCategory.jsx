@@ -1,17 +1,17 @@
 import React from 'react';
-import { ProductsList, TitleContainer } from '../components';
 import {
   Breadcumbs,
-  Filters,
-  ProductsPagination,
+  ProductsList,
+  TitleContainer,
   TitleImage,
-} from '../features/ProductCategory';
+} from '../components';
+import { Filters, ProductsPagination } from '../features/ProductCategory';
 
 const ProductCategory = () => {
   return (
     <div>
       <TitleImage />
-      <Breadcumbs />
+      <Breadcumbs name="Blazer" />
       <TitleContainer subTitle="Go sporty this summer with this vintage navy">
         Blazer
       </TitleContainer>

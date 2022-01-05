@@ -1,9 +1,8 @@
 import React from 'react';
-import { TitleContainer } from '../components';
+import { Delivery, TitleContainer } from '../components';
 import {
   ButtonShowMore,
   Categories,
-  Delivery,
   ProductsList,
   Sliders,
 } from '../features/HomePage';

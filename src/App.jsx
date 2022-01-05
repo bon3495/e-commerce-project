@@ -1,9 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
-import HomePage from './pages/HomePage';
-import ProductCategory from './pages/ProductCategory';
+import { Footer, Header } from './components';
+import { HomePage, ProductCategory, ProductDetail } from './pages';
 
 const App = () => {
   return (
@@ -12,10 +10,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<HomePage />} />
-        <Route
-          path="/product-category/:categoryId"
-          element={<ProductCategory />}
-        ></Route>
+        <Route path="/category/:categoryId" element={<ProductCategory />} />
+        <Route path="/product/:productId" element={<ProductDetail />} />
       </Routes>
       <Footer />
     </div>

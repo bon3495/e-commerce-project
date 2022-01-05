@@ -148,9 +148,7 @@ const Filters = () => {
           <PriceTitle>Filter Sort by</PriceTitle>
           <FiltersSelect>
             <Seclect>
-              <Option defaultValue disabled>
-                Name
-              </Option>
+              <Option defaultValue>Name</Option>
               <Option>Price</Option>
               <Option>Latest</Option>
             </Seclect>

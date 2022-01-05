@@ -23,7 +23,7 @@ const BreadcrumbsWrapper = styled.div`
   }
 `;
 
-const Breadcumbs = () => {
+const Breadcumbs = ({ name }) => {
   return (
     <BreadcrumbsWrapper>
       <Breadcrumbs
@@ -33,7 +33,7 @@ const Breadcumbs = () => {
         <LinkMui component={Link} to="/home" className="home">
           Home
         </LinkMui>
-        <Typography className="category">Blazer</Typography>
+        <Typography className="category">{name}</Typography>
       </Breadcrumbs>
     </BreadcrumbsWrapper>
   );
