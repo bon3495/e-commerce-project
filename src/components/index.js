@@ -5,3 +5,6 @@ export { default as Header } from './Header/Header';
 export { default as TitleImage } from './TitleImage/TitleImage';
 export { default as Breadcumbs } from './Breadcumbs/Breadcumbs';
 export { default as Delivery } from './Delivery/Delivery';
+export { default as InputField } from './InputField/InputField';
+export { default as PasswordField } from './PasswordField/PasswordField';
+export { default as FormContainer } from './FormContainer/FormContainer';

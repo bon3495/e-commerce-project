@@ -1,8 +1,8 @@
-import { Box, Button, IconButton } from '@material-ui/core';
-import { Add, Remove } from '@material-ui/icons';
+import { Box } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { DetailItem, FormContent, SizeConfig } from '..';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -105,96 +105,11 @@ const Desc = styled.div`
   line-height: 1.75;
 `;
 
-const FormContainer = styled.form`
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  column-gap: 30px;
-`;
-
-const QuantityContainer = styled.div`
-  display: flex;
-  padding: 4px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  column-gap: 8px;
-`;
-
-const ButtonChange = styled.div``;
-
-const QuantityInput = styled.input`
-  width: 44px;
-  border: none;
-  outline: none;
-  font-size: 20px;
-  text-align: center;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-`;
-
-const ButtonSubmit = styled.div``;
-
 const DetailContainer = styled.div``;
-
-const SizeContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 16px;
-`;
-
-const SizeTitle = styled.h6`
-  font-size: 16px;
-  color: #222;
-  margin-right: 20px;
-  font-weight: 500;
-`;
-
-const SizeList = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-`;
-
-const SizeItem = styled.li`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #e3e4e9;
-  width: 40px;
-  height: 36px;
-  transition: all 0.3s linear;
-  color: ${props => (props.isClick ? '#fff' : '#222')};
-  background-color: ${props => (props.isClick ? '#222' : '#fff')};
-  cursor: pointer;
-  &:hover {
-    color: white;
-    background-color: black;
-  }
-`;
-
-const DetailText = styled.p``;
 
 const ProductContent = () => {
   const [rating, setRating] = useState(5);
-  const [sizes, setSize] = useState([
-    { name: 'XS', id: 1 },
-    { name: 'S', id: 2 },
-    { name: 'M', id: 3 },
-    { name: 'L', id: 4 },
-    { name: 'XL', id: 5 },
-  ]);
 
-  const handleChangeSize = id => {
-    setSize(prevSizes =>
-      prevSizes.map(size => ({
-        ...size,
-        isClick: size.id === id ? true : false,
-      }))
-    );
-  };
   return (
     <Container>
       <Wrapper>
@@ -235,57 +150,13 @@ const ProductContent = () => {
           </Desc>
 
           <DetailContainer>
-            <SizeContainer>
-              <SizeTitle>Size :</SizeTitle>
-              <SizeList>
-                {sizes.map(size => (
-                  <SizeItem
-                    key={size.id}
-                    onClick={() => handleChangeSize(size.id)}
-                    isClick={size.isClick}
-                  >
-                    {size.name}
-                  </SizeItem>
-                ))}
-              </SizeList>
-            </SizeContainer>
+            <SizeConfig />
 
-            <SizeContainer>
-              <SizeTitle>Categories :</SizeTitle>
-              <DetailText>Woman, Dress, T-Shirt</DetailText>
-            </SizeContainer>
-
-            <SizeContainer>
-              <SizeTitle>Brand :</SizeTitle>
-              <DetailText>Luxottica</DetailText>
-            </SizeContainer>
+            <DetailItem title="Categories :" text="Woman, Dress, T-Shirt" />
+            <DetailItem title="Brand :" text="Luxottica" />
           </DetailContainer>
 
-          <FormContainer>
-            <QuantityContainer>
-              <ButtonChange>
-                <IconButton size="small">
-                  <Remove />
-                </IconButton>
-              </ButtonChange>
-              <QuantityInput defaultValue="1" />
-              <ButtonChange>
-                <IconButton size="small">
-                  <Add />
-                </IconButton>
-              </ButtonChange>
-            </QuantityContainer>
-            <ButtonSubmit>
-              <Button
-                variant="contained"
-                size="large"
-                color="secondary"
-                style={{ borderRadius: 6 }}
-              >
-                Add To Cart
-              </Button>
-            </ButtonSubmit>
-          </FormContainer>
+          <FormContent />
         </InfoContainer>
       </Wrapper>
     </Container>

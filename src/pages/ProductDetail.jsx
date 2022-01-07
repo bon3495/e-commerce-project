@@ -5,7 +5,7 @@ import { ProductContent } from '../features/ProductDetail';
 const ProductDetail = () => {
   return (
     <div>
-      <TitleImage />
+      <TitleImage>Basic Joggin Shorts</TitleImage>
       <Breadcumbs name="Basic Joggin Shorts" />
       <ProductContent />
       <Delivery />

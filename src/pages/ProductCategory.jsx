@@ -10,7 +10,7 @@ import { Filters, ProductsPagination } from '../features/ProductCategory';
 const ProductCategory = () => {
   return (
     <div>
-      <TitleImage />
+      <TitleImage>Blazer</TitleImage>
       <Breadcumbs name="Blazer" />
       <TitleContainer subTitle="Go sporty this summer with this vintage navy">
         Blazer

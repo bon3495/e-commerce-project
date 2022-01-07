@@ -32,10 +32,10 @@ const TitleContent = styled.p`
   font-family: 'Libre Baskerville', serif;
 `;
 
-const TitleImage = () => {
+const TitleImage = ({ children }) => {
   return (
     <TitleWrapper>
-      <TitleContent>Blazer</TitleContent>
+      <TitleContent>{children}</TitleContent>
     </TitleWrapper>
   );
 };

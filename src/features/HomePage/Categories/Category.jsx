@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { mediumTablet } from '../../../constants';
 
 const ImageContainer = styled.div``;
 
@@ -31,7 +32,7 @@ const Info = styled.div`
 
 const InfoTitle = styled.h4`
   color: white;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 500;
   text-align: center;
   letter-spacing: 1px;
@@ -39,6 +40,10 @@ const InfoTitle = styled.h4`
   /* opacity: 0; */
   transition: all 0.3s linear;
   /* font-family: 'Libre Baskerville', serif; */
+
+  ${mediumTablet({
+    fontSize: '30px',
+  })}
 `;
 
 const ButtonContainer = styled.div`
@@ -52,8 +57,8 @@ const ButtonContainer = styled.div`
 `;
 
 const ListItem = styled.div`
-  width: calc(25% - 30px);
-  margin-left: 30px;
+  /* width: calc(25% - 30px);
+  margin-left: 30px; */
   position: relative;
   flex-shrink: 0;
   /* &:hover ${Info} {
@@ -80,9 +85,8 @@ const Category = ({ category }) => {
           <Button
             variant="contained"
             color="primary"
-            size="large"
+            // size="large"
             // fullWidth
-            style={{ borderRadius: 20 }}
             onClick={() => handleClick(category.id)}
             component={Link}
             to={`/category/${category.id}`}

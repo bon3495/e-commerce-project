@@ -1,39 +1,25 @@
+import { Box, Container, Grid } from '@material-ui/core';
 import React from 'react';
-import styled from 'styled-components';
+import TitleContainer from '../../../components/TitleContainer/TitleContainer';
 import { categories } from '../../../constants/fake-data';
 import Category from './Category';
-import TitleContainer from '../../../components/TitleContainer/TitleContainer';
-
-const Container = styled.div`
-  /* padding: 30px 15px; */
-  padding: 30px 0;
-
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-`;
-
-const ListContent = styled.div`
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  margin-left: -30px;
-  row-gap: 30px;
-`;
 
 const Categories = () => {
   return (
-    <>
+    <Box pt={3}>
       <TitleContainer subTitle="All categories">Categories</TitleContainer>
-      <Container>
-        <ListContent>
-          {categories.map(category => (
-            <Category key={category.id} category={category} />
-          ))}
-        </ListContent>
-      </Container>
-    </>
+      <Box>
+        <Container>
+          <Grid container spacing={2}>
+            {categories.map(category => (
+              <Grid key={category.id} item xs={6} sm={4} md={3} lg>
+                <Category category={category} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 

@@ -46,6 +46,11 @@ export const categories = [
     img: 'http://74.arrowhitech.net/gpm/claue2.0/pub/media/catalog/product/cache/7649c00d5b6f2ce008ff0e304126e2fc/9/_/9_1_6.jpg',
     type: 'Cuffed Beanie',
   },
+  {
+    id: 5,
+    img: 'https://claue2.arrowtheme.com/media/catalog/product/cache/7649c00d5b6f2ce008ff0e304126e2fc/r/e/rectangle_58.png',
+    type: 'Denim Shirt',
+  },
 ];
 
 export const products = [

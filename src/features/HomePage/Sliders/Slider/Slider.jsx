@@ -1,34 +1,12 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
-
-const slideInLeft = keyframes`
- 0% {
-    transform: translate(100%,-50%);
-    opacity: 0;
-  }
-  80% {
-    transform: translate(-1rem,-50%);
-  }
-  100% {
-    transform: translate(0,-50%);
-    opacity: 1;
-  }
-`;
-
-const slideInRight = keyframes`
- 0% {
-    transform: translate(-100%,-50%);
-    opacity: 0;
-  }
-  80% {
-    transform: translate(1rem,-50%);
-  }
-  100% {
-    transform: translate(0,-50%);
-    opacity: 1;
-  }
-`;
+import styled from 'styled-components';
+import {
+  largeHandset,
+  largeTablet,
+  mediumTablet,
+  smallTablet,
+} from '../../../../constants';
 
 const Slide = styled.div`
   height: 100%;
@@ -59,31 +37,55 @@ const InfoContainer = styled.div`
   position: absolute;
   color: #222;
   top: 50%;
-  left: ${props => props.position === 'right' && '6%'};
+  left: ${props => props.position === 'right' && '10%'};
   right: ${props => props.position === 'left' && '10%'};
   transform: translateY(-50%);
-  /* animation: ${props =>
-    props.position === 'right' ? slideInLeft : slideInRight}
-    1s linear 0.75s backwards; */
 `;
 
 const SubTitle = styled.div`
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 400;
+
+  ${largeHandset({
+    fontSize: '16px',
+  })}
+
+  ${smallTablet({
+    fontSize: '18px',
+  })}
 `;
 
 const Title = styled.div`
-  font-size: 50px;
+  font-size: 20px;
   text-transform: uppercase;
   font-weight: bold;
-  margin: 8px 0;
+  margin: 16px 0;
+
+  ${largeHandset({
+    fontSize: '24px',
+  })}
+
+  ${smallTablet({
+    fontSize: '32px',
+  })}
+
+  ${mediumTablet({
+    fontSize: '42px',
+  })}
+  ${largeTablet({
+    fontSize: '50px',
+  })}
 `;
 
 const Desc = styled.p`
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   font-size: 14px;
   line-height: 24.5px;
   color: #878787;
+  display: none;
+  ${largeTablet({
+    display: 'block',
+  })}
 `;
 
 const Slider = ({ slider, slidersIndex }) => {
@@ -97,7 +99,7 @@ const Slider = ({ slider, slidersIndex }) => {
         <Button
           size="large"
           variant="outlined"
-          style={{ borderRadius: 20, fontSize: 14 }}
+          // style={{ borderRadius: 20, fontSize: 14 }}
         >
           Shop now
         </Button>
