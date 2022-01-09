@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { largeHandset } from '../../constants';
 
 const Container = styled.div`
   margin: 30px 0;
@@ -10,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: 24px;
+  font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: relative;
@@ -30,10 +31,14 @@ const Title = styled.h3`
     top: 48%;
     right: -75px;
   }
+
+  ${largeHandset({
+    fontSize: '24px',
+  })}
 `;
 
 const SubTitle = styled.h4`
-  font-size: 14px;
+  font-size: 12px;
   color: #878787;
   font-weight: normal;
   font-family: 'Libre Baskerville', serif;
@@ -41,6 +46,10 @@ const SubTitle = styled.h4`
   letter-spacing: 0.5px;
   font-style: italic;
   line-height: 16px;
+
+  ${largeHandset({
+    fontSize: '14px',
+  })}
 `;
 
 const TitleContainer = ({ children, subTitle }) => {

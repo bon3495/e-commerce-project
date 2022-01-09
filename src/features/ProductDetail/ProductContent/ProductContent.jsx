@@ -1,29 +1,29 @@
-import { Box } from '@material-ui/core';
+import { Box, Container, Grid } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DetailItem, FormContent, SizeConfig } from '..';
+import { mediumTablet, smallTablet } from '../../../constants';
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 15px;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
+const NewGrid = styled(Grid)`
+  ${smallTablet({
+    maxWidth: '100%',
+    flexBasis: '100%',
+  })}
+  ${mediumTablet({
+    maxWidth: '50%',
+    flexBasis: '50%',
+  })}
 `;
 
 const ImgContainer = styled.div`
-  flex: 1;
   padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  width: 50%;
 `;
 
 const Image = styled.img`
-  max-width: 100%;
+  width: 100%;
   height: auto;
   object-fit: cover;
   display: flex;
@@ -31,9 +31,11 @@ const Image = styled.img`
 `;
 
 const InfoContainer = styled.div`
-  flex: 1;
-  width: 50%;
-  padding: 30px;
+  /* padding: 10px;
+
+  ${mediumTablet({
+    padding: '30px',
+  })} */
 `;
 
 const Title = styled.h3`
@@ -111,55 +113,61 @@ const ProductContent = () => {
   const [rating, setRating] = useState(5);
 
   return (
-    <Container>
-      <Wrapper>
-        <ImgContainer>
-          <Image
-            src="https://claue.arrowtheme.com/media/catalog/product/cache/2c6622467c9ab2c04bc1ee512df331fe/1/4/14759082921406855888_1.jpg"
-            alt="Basic Joggin Shorts"
-          />
-        </ImgContainer>
-        <InfoContainer>
-          <Title>Basic Joggin Shorts</Title>
-          <RatingContainer>
-            <RatingDigit>
-              <Box component="fieldset" borderColor="transparent">
-                <Rating
-                  name="simple-controlled"
-                  value={rating}
-                  onChange={(_, newValue) => {
-                    setRating(newValue);
-                  }}
-                />
-              </Box>
-              <Digit>{rating || 0}.0</Digit>
-            </RatingDigit>
-            <ReviewOrder>
-              <Review>26 Reviews</Review>
-              <Order>242 Orders</Order>
-            </ReviewOrder>
-          </RatingContainer>
-          <PriceContainer>
-            <NewPrice>$75.00</NewPrice>
-            <OriginPrice>$90.00</OriginPrice>
-          </PriceContainer>
-          <Desc>
-            Go sporty this summer with this vintage navy and white striped
-            v-neck t-shirt from the Nike. Perfect for pairing with denim and
-            white kicks for a stylish sporty vibe.
-          </Desc>
+    <Box>
+      <Container>
+        <Grid container spacing={2}>
+          <NewGrid item xs={12} sm={6}>
+            <ImgContainer>
+              <Image
+                src="https://claue.arrowtheme.com/media/catalog/product/cache/2c6622467c9ab2c04bc1ee512df331fe/1/4/14759082921406855888_1.jpg"
+                alt="Basic Joggin Shorts"
+              />
+            </ImgContainer>
+          </NewGrid>
+          <NewGrid item xs={12} sm={6}>
+            <InfoContainer>
+              <Title>Basic Joggin Shorts</Title>
+              <RatingContainer>
+                <RatingDigit>
+                  <Box component="fieldset" borderColor="transparent">
+                    <Rating
+                      name="simple-controlled"
+                      value={rating}
+                      onChange={(_, newValue) => {
+                        setRating(newValue);
+                      }}
+                    />
+                  </Box>
+                  <Digit>{rating || 0}.0</Digit>
+                </RatingDigit>
+                <ReviewOrder>
+                  <Review>26 Reviews</Review>
+                  <Order>242 Orders</Order>
+                </ReviewOrder>
+              </RatingContainer>
+              <PriceContainer>
+                <NewPrice>$75.00</NewPrice>
+                <OriginPrice>$90.00</OriginPrice>
+              </PriceContainer>
+              <Desc>
+                Go sporty this summer with this vintage navy and white striped
+                v-neck t-shirt from the Nike. Perfect for pairing with denim and
+                white kicks for a stylish sporty vibe.
+              </Desc>
 
-          <DetailContainer>
-            <SizeConfig />
+              <DetailContainer>
+                <SizeConfig />
 
-            <DetailItem title="Categories :" text="Woman, Dress, T-Shirt" />
-            <DetailItem title="Brand :" text="Luxottica" />
-          </DetailContainer>
+                <DetailItem title="Categories :" text="Woman, Dress, T-Shirt" />
+                <DetailItem title="Brand :" text="Luxottica" />
+              </DetailContainer>
 
-          <FormContent />
-        </InfoContainer>
-      </Wrapper>
-    </Container>
+              <FormContent />
+            </InfoContainer>
+          </NewGrid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

@@ -6,6 +6,20 @@ export default makeStyles(theme => ({
     backgroundColor: theme.palette.background.default,
   },
 
+  cartScreen: {
+    display: 'none',
+    [theme.breakpoints.up('840')]: {
+      display: 'block',
+    },
+  },
+
+  cartMobile: {
+    display: 'block',
+    [theme.breakpoints.up('840')]: {
+      display: 'none',
+    },
+  },
+
   formActions: {
     padding: theme.spacing(4, 0),
     display: 'flex',

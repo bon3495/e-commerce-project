@@ -61,6 +61,7 @@ const Register = () => {
           />
         }
         label="I agree to the Terms and Privacy Policy."
+        className={classes.checkboxLabel}
       />
       <Button
         fullWidth
@@ -72,7 +73,7 @@ const Register = () => {
         Sign in
       </Button>
       <Box className={classes.links} textAlign="right">
-        <LinkMui component={Link} to="/login">
+        <LinkMui component={Link} to="/login" className={classes.link}>
           Already have an account? Sign in
         </LinkMui>
       </Box>

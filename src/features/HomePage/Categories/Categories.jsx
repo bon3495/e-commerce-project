@@ -6,7 +6,7 @@ import Category from './Category';
 
 const Categories = () => {
   return (
-    <Box pt={3}>
+    <Box pt={3} pb={4}>
       <TitleContainer subTitle="All categories">Categories</TitleContainer>
       <Box>
         <Container>

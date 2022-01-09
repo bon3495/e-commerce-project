@@ -7,26 +7,8 @@ import {
 import React from 'react';
 import styled from 'styled-components';
 import TitleContainer from '../TitleContainer/TitleContainer';
+import { Container, Box, Grid } from '@material-ui/core';
 
-const Container = styled.div`
-  padding: 30px 15px 45px;
-  /* padding: 30px 0; */
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-`;
-
-const DeliveryWrapper = styled.div`
-  display: flex;
-  margin-left: -30px;
-`;
-
-const DeliveryItem = styled.div`
-  width: calc(25% - 30px);
-  margin-left: 30px;
-  text-align: center;
-  padding: 0 8px;
-`;
 const DeliveryTitle = styled.h6`
   display: flex;
   align-items: center;
@@ -38,6 +20,7 @@ const DeliveryTitle = styled.h6`
 
 const DeliveryContent = styled.p`
   color: #878787;
+  text-align: center;
 `;
 
 const deliveries = [
@@ -73,19 +56,21 @@ const Delivery = () => {
       <TitleContainer subTitle="Custom static block for product detail">
         DELIVERY & RETURNS
       </TitleContainer>
-      <Container>
-        <DeliveryWrapper>
-          {deliveries.map(delivery => (
-            <DeliveryItem key={delivery.id}>
-              <DeliveryTitle>
-                {delivery.icon}
-                {delivery.title}
-              </DeliveryTitle>
-              <DeliveryContent>{delivery.desc}</DeliveryContent>
-            </DeliveryItem>
-          ))}
-        </DeliveryWrapper>
-      </Container>
+      <Box pt={3} pb={7}>
+        <Container>
+          <Grid container spacing={4}>
+            {deliveries.map(delivery => (
+              <Grid item xs={12} sm={6} md={3} key={delivery.id}>
+                <DeliveryTitle>
+                  {delivery.icon}
+                  {delivery.title}
+                </DeliveryTitle>
+                <DeliveryContent>{delivery.desc}</DeliveryContent>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
     </>
   );
 };

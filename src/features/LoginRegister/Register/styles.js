@@ -10,4 +10,18 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+
+  link: {
+    [theme.breakpoints.down('460')]: {
+      fontSize: '14px',
+    },
+  },
+  checkboxLabel: {
+    marginRight: 0,
+    '& span': {
+      [theme.breakpoints.down('460')]: {
+        fontSize: '14px',
+      },
+    },
+  },
 }));

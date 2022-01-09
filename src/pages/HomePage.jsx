@@ -9,7 +9,7 @@ import {
 
 const HomePage = () => {
   return (
-    <div>
+    <>
       <Sliders />
       <Categories />
       <TitleContainer subTitle="Top view in the week">
@@ -18,7 +18,7 @@ const HomePage = () => {
       <ProductsList />
       <ButtonShowMore />
       <Delivery />
-    </div>
+    </>
   );
 };
 

@@ -1,4 +1,11 @@
-import { Divider, IconButton, Slider } from '@material-ui/core';
+import {
+  Box,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  Slider,
+} from '@material-ui/core';
 import { SearchOutlined } from '@material-ui/icons';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -6,22 +13,6 @@ import styled from 'styled-components';
 function valuetext(value) {
   return `$${value}`;
 }
-
-const Container = styled.div`
-  padding: 15px 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-`;
-
-const FiltersList = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  margin-bottom: 20px;
-`;
 
 const FiltersItem = styled.li`
   flex: 1;
@@ -50,7 +41,7 @@ const PriceTitle = styled.h5`
 `;
 
 const PriceTop = styled.div`
-  width: 70%;
+  width: 80%;
   display: flex;
   align-items: center;
   padding: 4px;
@@ -98,6 +89,10 @@ const Seclect = styled.select`
 
 const Option = styled.option``;
 
+const DividerFilter = styled(Divider)`
+  margin: 50px 0;
+`;
+
 const Filters = () => {
   const [value, setValue] = useState([1, 300]);
 
@@ -106,57 +101,65 @@ const Filters = () => {
   };
 
   return (
-    <Container>
-      <FiltersList>
-        <FiltersItem>
-          <PriceTitle>Filter by Price</PriceTitle>
-          <PriceTop>
-            <PriceRange>
-              <Slider
-                value={value}
-                max={300}
-                onChange={handleChange}
-                valueLabelDisplay="auto"
-                aria-labelledby="range-slider"
-                getAriaValueText={valuetext}
-                valueLabelFormat={valuetext}
-              />
-            </PriceRange>
-            <PriceButton>
-              <IconButton color="primary">
-                <SearchOutlined />
-              </IconButton>
-            </PriceButton>
-          </PriceTop>
-        </FiltersItem>
-        <FiltersItem>
-          <PriceTitle>Filter by Brand</PriceTitle>
-          <FiltersSelect>
-            <Seclect>
-              <Option defaultValue disabled>
-                Brand...
-              </Option>
-              <Option>Escada</Option>
-              <Option>Fendi</Option>
-              <Option>Bouclair</Option>
-              <Option>Prada</Option>
-              <Option>Luxottica</Option>
-            </Seclect>
-          </FiltersSelect>
-        </FiltersItem>
-        <FiltersItem>
-          <PriceTitle>Filter Sort by</PriceTitle>
-          <FiltersSelect>
-            <Seclect>
-              <Option defaultValue>Name</Option>
-              <Option>Price</Option>
-              <Option>Latest</Option>
-            </Seclect>
-          </FiltersSelect>
-        </FiltersItem>
-      </FiltersList>
-      <Divider />
-    </Container>
+    <Box>
+      <Container maxWidth="md">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={4}>
+            <FiltersItem>
+              <PriceTitle>Filter by Price</PriceTitle>
+              <PriceTop>
+                <PriceRange>
+                  <Slider
+                    value={value}
+                    max={300}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="range-slider"
+                    getAriaValueText={valuetext}
+                    valueLabelFormat={valuetext}
+                  />
+                </PriceRange>
+                <PriceButton>
+                  <IconButton color="primary" size="small">
+                    <SearchOutlined />
+                  </IconButton>
+                </PriceButton>
+              </PriceTop>
+            </FiltersItem>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FiltersItem>
+              <PriceTitle>Filter by Brand</PriceTitle>
+              <FiltersSelect>
+                <Seclect>
+                  <Option defaultValue disabled>
+                    Brand...
+                  </Option>
+                  <Option>Escada</Option>
+                  <Option>Fendi</Option>
+                  <Option>Bouclair</Option>
+                  <Option>Prada</Option>
+                  <Option>Luxottica</Option>
+                </Seclect>
+              </FiltersSelect>
+            </FiltersItem>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FiltersItem>
+              <PriceTitle>Filter Sort by</PriceTitle>
+              <FiltersSelect>
+                <Seclect>
+                  <Option defaultValue>Name</Option>
+                  <Option>Price</Option>
+                  <Option>Latest</Option>
+                </Seclect>
+              </FiltersSelect>
+            </FiltersItem>
+          </Grid>
+        </Grid>
+        <DividerFilter variant="middle" />
+      </Container>
+    </Box>
   );
 };
 

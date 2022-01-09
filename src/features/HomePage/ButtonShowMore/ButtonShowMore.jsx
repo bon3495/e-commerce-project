@@ -11,7 +11,7 @@ const Container = styled.div`
 const ButtonShowMore = () => {
   return (
     <Container>
-      <Button variant="contained" color="primary" style={{ borderRadius: 20 }}>
+      <Button variant="contained" color="primary" size="small">
         Show More
       </Button>
     </Container>

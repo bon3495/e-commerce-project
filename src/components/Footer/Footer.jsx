@@ -1,38 +1,51 @@
+import { Box, Container, Grid, IconButton } from '@material-ui/core';
+import {
+  Facebook,
+  Instagram,
+  MailOutline,
+  PhoneOutlined,
+  Pinterest,
+  RoomOutlined,
+  Twitter,
+  YouTube,
+} from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
 import {
-  RoomOutlined,
-  MailOutline,
-  PhoneOutlined,
-  Facebook,
-  Instagram,
-  Twitter,
-  YouTube,
-  Pinterest,
-} from '@material-ui/icons';
-import { IconButton } from '@material-ui/core';
+  largeHandset,
+  largeScreen,
+  mediumTablet,
+  smallTablet,
+} from '../../constants';
 import { categories } from '../../constants/fake-data';
+import FooterItemContainer from './FooterItemContainer';
+import useStyles from './styles';
 
-const Container = styled.div`
-  padding: 30px 15px;
-  background-color: #f6f6f8;
-`;
+const socialsIcon = [
+  <Facebook />,
+  <Instagram />,
+  <Twitter />,
+  <YouTube />,
+  <Pinterest />,
+];
 
-const Wrapper = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-`;
+const infomations = [
+  'About Us',
+  'Contact Us',
+  'Terms & Conditions',
+  'Returns & Exchanges',
+  'Shipping & Delivery',
+  'Privacy Policy',
+];
 
-const FooterTop = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-`;
-
-const FooterMainContainer = styled.div`
-  flex: 2;
-  padding: 0 15px;
-`;
+const quickLinks = [
+  'Store Location',
+  'My Account',
+  'Accessories',
+  'Orders Tracking',
+  'Size Guide',
+  'FAQs',
+];
 
 const FooterLogo = styled.h3`
   font-size: 30px;
@@ -54,7 +67,8 @@ const MainItem = styled.li`
   display: flex;
   align-items: center;
   margin-bottom: 16px;
-  color: #878787;
+  color: #8e8e8e;
+  font-weight: 300;
   & .item-icon {
     margin-right: 12px;
   }
@@ -72,30 +86,23 @@ const SocialsLink = styled.li`
   margin-right: 12px;
 `;
 
-const FooterItemContainer = styled.div`
-  flex: 1;
-  padding: 0 15px;
-`;
-
-const FooterTitle = styled.h6`
-  font-size: 20px;
-  margin: 10px 0 16px;
-`;
-
-const FooterLink = styled.a`
-  line-height: 30px;
-  margin-bottom: 5px;
-  text-decoration: none;
-  color: #878787;
-`;
-
 const FooterSubcribe = styled.div`
-  flex: 2;
   padding: 0 15px;
+  ${mediumTablet({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    columnGap: '30px',
+    flexDdirection: 'row',
+  })}
+  ${largeScreen({
+    flexDirection: 'column',
+  })};
 `;
 
 const FooterText = styled.p`
-  color: #878787;
+  color: #8e8e8e;
+  font-weight: 300;
   font-size: 14px;
   margin: 10px 0 16px;
   line-height: 24px;
@@ -103,10 +110,23 @@ const FooterText = styled.p`
 
 const FooterFormContainer = styled.div`
   max-width: 100%;
+  height: 100%;
   border-radius: 50px;
   border: 1px solid #878787;
   padding: 2px;
   margin: 0;
+
+  ${largeHandset({
+    maxWidth: '70%',
+  })}
+
+  ${smallTablet({
+    maxWidth: '50%',
+  })}
+
+  ${mediumTablet({
+    maxWidth: '100%',
+  })}
 `;
 
 const FooterForm = styled.form`
@@ -114,9 +134,12 @@ const FooterForm = styled.form`
   align-items: center;
 `;
 
-const FooterControl = styled.div``;
+const FooterControl = styled.div`
+  width: 60%;
+`;
 
 const FooterInput = styled.input`
+  width: 100%;
   height: 40px;
   border-radius: 50px;
   border: none;
@@ -158,114 +181,93 @@ const CoppyRight = styled.p`
   font-size: 14px;
   color: #878787;
   padding: 16px 0;
+  font-weight: 300;
 `;
 
 const Footer = () => {
+  const classes = useStyles();
   const handleSubmit = e => {
     e.preventDefault();
   };
 
   return (
     <>
-      <Container>
-        <Wrapper>
-          <FooterTop>
-            <FooterMainContainer>
-              <FooterLogo>Commerce</FooterLogo>
+      <Box className={classes.wrapper}>
+        <Container>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} lg={3}>
+              <Box mb={4}>
+                <FooterLogo>Ecommerce</FooterLogo>
 
-              <FooterList>
-                <MainItem>
-                  <RoomOutlined className="item-icon" />
-                  184 Main Rd E, St Albans
-                  <br />
-                  VIC 3021, Australia
-                </MainItem>
-                <MainItem>
-                  <MailOutline className="item-icon" />
-                  bon3495@gmail.com
-                </MainItem>
-                <MainItem>
-                  <PhoneOutlined className="item-icon" />
-                  +84 796 849
-                </MainItem>
-              </FooterList>
+                <FooterList>
+                  <MainItem>
+                    <RoomOutlined className="item-icon" />
+                    184 Main Rd E, St Albans
+                    <br />
+                    VIC 3021, Australia
+                  </MainItem>
+                  <MainItem>
+                    <MailOutline className="item-icon" />
+                    bon3495@gmail.com
+                  </MainItem>
+                  <MainItem>
+                    <PhoneOutlined className="item-icon" />
+                    +84 796 849
+                  </MainItem>
+                </FooterList>
 
-              <SocialsList>
-                <SocialsLink>
-                  <IconButton size="small">
-                    <Facebook />
-                  </IconButton>
-                </SocialsLink>
-                <SocialsLink>
-                  <IconButton size="small">
-                    <Instagram />
-                  </IconButton>
-                </SocialsLink>
-                <SocialsLink>
-                  <IconButton size="small">
-                    <Twitter />
-                  </IconButton>
-                </SocialsLink>
-                <SocialsLink>
-                  <IconButton size="small">
-                    <YouTube />
-                  </IconButton>
-                </SocialsLink>
-                <SocialsLink>
-                  <IconButton size="small">
-                    <Pinterest />
-                  </IconButton>
-                </SocialsLink>
-              </SocialsList>
-            </FooterMainContainer>
-            <FooterItemContainer>
-              <FooterTitle>Categories</FooterTitle>
-              <FooterList>
-                {categories.map(category => (
-                  <FooterLink key={category.id}>{category.type}</FooterLink>
-                ))}
-              </FooterList>
-            </FooterItemContainer>
-            <FooterItemContainer>
-              <FooterTitle>Categories</FooterTitle>
-              <FooterList>
-                <FooterLink>About Us</FooterLink>
-                <FooterLink>Contact Us</FooterLink>
-                <FooterLink>Terms & Conditions</FooterLink>
-                <FooterLink>Returns & Exchanges</FooterLink>
-                <FooterLink>Shipping & Delivery</FooterLink>
-                <FooterLink>Privacy Policy</FooterLink>
-              </FooterList>
-            </FooterItemContainer>
-            <FooterItemContainer>
-              <FooterTitle>Quick Links</FooterTitle>
-              <FooterList>
-                <FooterLink>Store Location</FooterLink>
-                <FooterLink>My Account</FooterLink>
-                <FooterLink>Accessories</FooterLink>
-                <FooterLink>Orders Tracking</FooterLink>
-                <FooterLink>Size Guide</FooterLink>
-                <FooterLink>FAQs</FooterLink>
-              </FooterList>
-            </FooterItemContainer>
-            <FooterSubcribe>
-              <FooterText>
-                Subscribe to our newsletter and get 10% off your first purchase
-              </FooterText>
-              <FooterFormContainer>
-                <FooterForm onSubmit={handleSubmit}>
-                  <FooterControl>
-                    <FooterInput placeholder="Your email address" />
-                  </FooterControl>
-                  <FooterActions>
-                    <FooterSubmit>Subscribe</FooterSubmit>
-                  </FooterActions>
-                </FooterForm>
-              </FooterFormContainer>
-            </FooterSubcribe>
-          </FooterTop>
-        </Wrapper>
-      </Container>
+                <SocialsList>
+                  {socialsIcon.map((item, index) => (
+                    <SocialsLink key={index}>
+                      <IconButton size="small">{item}</IconButton>
+                    </SocialsLink>
+                  ))}
+                </SocialsList>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={2}>
+              <Box mb={4}>
+                <FooterItemContainer title="Categories" list={categories} />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={2}>
+              <Box mb={4}>
+                <FooterItemContainer title="Information" list={infomations} />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={2}>
+              <Box mb={4}>
+                <FooterItemContainer title="Quick Links" list={quickLinks} />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={12} lg={3}>
+              <Box>
+                <FooterSubcribe>
+                  <FooterText>
+                    Subscribe to our newsletter and get 10% off your first
+                    purchase
+                  </FooterText>
+                  <FooterFormContainer>
+                    <FooterForm onSubmit={handleSubmit}>
+                      <FooterControl>
+                        <FooterInput placeholder="Your email address" />
+                      </FooterControl>
+                      <FooterActions>
+                        <FooterSubmit>Subscribe</FooterSubmit>
+                      </FooterActions>
+                    </FooterForm>
+                  </FooterFormContainer>
+                </FooterSubcribe>
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
       <CoppyRight>
         Copyright © 2021 E-Commerce. All rights reserved. Powered by BonTran
       </CoppyRight>

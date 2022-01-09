@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 export default makeStyles(theme => ({
   totalCartContainer: {
-    padding: theme.spacing(5),
+    padding: theme.spacing(3),
     // backgroundColor: theme.palette.grey[100],
     backgroundColor: 'white',
     borderRadius: theme.shape.borderRadius,

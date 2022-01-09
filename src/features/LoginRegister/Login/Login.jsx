@@ -60,6 +60,7 @@ const Login = () => {
           />
         }
         label="Remember Me"
+        className={classes.checkboxLabel}
       />
       <Button
         fullWidth
@@ -71,7 +72,7 @@ const Login = () => {
         Sign in
       </Button>
       <Box className={classes.links} textAlign="right">
-        <LinkMui component={Link} to="/register">
+        <LinkMui component={Link} to="/register" className={classes.link}>
           Dont't have an account yet? Sign up here
         </LinkMui>
       </Box>

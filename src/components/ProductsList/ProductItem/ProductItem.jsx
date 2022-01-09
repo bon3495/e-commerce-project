@@ -3,6 +3,7 @@ import { FavoriteBorderOutlined, SearchOutlined } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { largeHandset } from '../../../constants';
 
 const ProductTop = styled.div`
   position: relative;
@@ -46,12 +47,16 @@ const ButtonWrap = styled.div`
   z-index: 2;
   transition: all 0.3s linear;
   width: 100%;
-  padding: 0 30px;
+  padding: 0 10px;
   position: absolute;
   left: 50%;
   top: 50%;
   opacity: 0;
   transform: translate(-50%, 20%);
+
+  ${largeHandset({
+    padding: '0 30px',
+  })}
 `;
 
 const ProductBottom = styled.div`
@@ -88,10 +93,8 @@ const NewPrice = styled.div`
 `;
 
 const Container = styled(Link)`
-  width: calc(25% - 30px);
-  margin-left: 30px;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 
@@ -100,7 +103,7 @@ const Container = styled(Link)`
   }
 
   &:hover ${ButtonWrap} {
-    transform: translate(-50%, -40%);
+    transform: translate(-50%, 0);
     opacity: 1;
   }
 
@@ -149,7 +152,6 @@ const ProductItem = ({ product }) => {
               className="addButton"
               // size="large"
               variant="contained"
-              style={{ borderRadius: 20 }}
               fullWidth
               // endIcon={<AddShoppingCartOutlined />}
               onClick={handleAddToCart}
