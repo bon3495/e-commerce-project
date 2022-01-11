@@ -70,7 +70,7 @@ const Register = () => {
         variant="contained"
         className={classes.submitButton}
       >
-        Sign in
+        Sign Up
       </Button>
       <Box className={classes.links} textAlign="right">
         <LinkMui component={Link} to="/login" className={classes.link}>

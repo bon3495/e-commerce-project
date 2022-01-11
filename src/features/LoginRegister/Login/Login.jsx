@@ -8,6 +8,7 @@ import {
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FormContainer, InputField, PasswordField } from '../../../components';
+import { signInGoogle } from '../../../firebase/firebase-utils';
 import useStyles from './styles';
 
 const Login = () => {
@@ -69,7 +70,18 @@ const Login = () => {
         variant="contained"
         className={classes.submitButton}
       >
-        Sign in
+        Sign In
+      </Button>
+
+      <Button
+        fullWidth
+        color="default"
+        size="large"
+        variant="contained"
+        className={classes.submitButton}
+        onClick={signInGoogle}
+      >
+        Sign in with Google
       </Button>
       <Box className={classes.links} textAlign="right">
         <LinkMui component={Link} to="/register" className={classes.link}>
