@@ -29,7 +29,7 @@ const FormContainer = ({ children, formTitle }) => {
                 {formTitle}
               </Typography>
             </Box>
-            <form>{children}</form>
+            {children}
           </Box>
         </Paper>
       </Container>

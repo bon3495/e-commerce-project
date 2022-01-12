@@ -8,6 +8,7 @@ export default makeStyles(theme => ({
 
   wrapper: {
     padding: theme.spacing(5, 7),
+    position: 'relative',
   },
 
   avatarContainer: {

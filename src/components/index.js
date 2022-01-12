@@ -8,3 +8,4 @@ export { default as Delivery } from './Delivery/Delivery';
 export { default as InputField } from './InputField/InputField';
 export { default as PasswordField } from './PasswordField/PasswordField';
 export { default as FormContainer } from './FormContainer/FormContainer';
+export { default as CheckboxField } from './CheckboxField/CheckboxField';

@@ -1,7 +1,14 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+} from 'firebase/auth';
+import { useEffect } from 'react';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,11 +29,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+export const auth = getAuth(app);
 
 export const signInGoogle = () => {
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
-  //   provider.setCustomParameters({ promt: 'select_account' });
   signInWithPopup(auth, provider)
     .then(result => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -45,4 +51,19 @@ export const signInGoogle = () => {
       console.log('error email: ', email);
       console.log('error credential: ', credential);
     });
+};
+
+export const signupWithEmailPassword = ({ email, password }) => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const useAuth = () => {
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, user => {
+      if (!user) return;
+      return user;
+    });
+
+    return unsub;
+  }, []);
 };
