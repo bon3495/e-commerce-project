@@ -4,14 +4,19 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <SnackbarProvider
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
         <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+      </SnackbarProvider>
+    </Provider>
+  </BrowserRouter>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );

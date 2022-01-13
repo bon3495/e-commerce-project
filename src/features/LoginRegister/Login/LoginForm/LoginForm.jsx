@@ -6,9 +6,8 @@ import {
   LinearProgress,
   Link as LinkMui,
 } from '@material-ui/core';
-import { onAuthStateChanged } from 'firebase/auth';
 import 'firebase/compat/auth';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -17,7 +16,6 @@ import {
   InputField,
   PasswordField,
 } from '../../../../components';
-import { auth, signInGoogle } from '../../../../firebase/firebase-utils';
 import useStyles from './styles';
 
 const schema = yup.object().shape({
@@ -32,7 +30,7 @@ const schema = yup.object().shape({
     .min(6, 'Password must be at least 6 characters!'),
 });
 
-const LoginForm = () => {
+const LoginForm = ({ onLoginSubmit, onSignInGG }) => {
   const classes = useStyles();
 
   const {
@@ -47,27 +45,11 @@ const LoginForm = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleSubmitLogin = values => {
-    console.log(values);
+  const handleSubmitLogin = async values => {
+    if (!onLoginSubmit) return;
+
+    await onLoginSubmit(values);
   };
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async user => {
-      if (!user) {
-        // user log out, handle something here
-        console.log('User is not logged in');
-        return;
-      }
-
-      console.log('Logged in user: ', user.displayName);
-
-      const token = await user.getIdToken();
-
-      console.log('Token: ', token);
-    });
-
-    return () => unsub();
-  }, []);
 
   return (
     <FormContainer formTitle="Sign In">
@@ -93,6 +75,7 @@ const LoginForm = () => {
           variant="contained"
           className={classes.submitButton}
           type="submit"
+          disabled={isSubmitting}
         >
           Sign In
         </Button>
@@ -105,7 +88,7 @@ const LoginForm = () => {
           size="large"
           variant="contained"
           className={classes.submitButton}
-          onClick={signInGoogle}
+          onClick={onSignInGG}
         >
           Sign in with Google
         </Button>

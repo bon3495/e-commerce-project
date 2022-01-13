@@ -1,129 +1,67 @@
-// import { SearchRounded, ShoppingCartOutlined } from '@material-ui/icons';
-// import React from 'react';
-// import styled from 'styled-components';
-// import { Badge, IconButton } from '@material-ui/core';
-// import { NAV_HEIGHT } from '../../constants';
-// import { Link } from 'react-router-dom';
-
-// const Container = styled.div`
-//   height: ${NAV_HEIGHT}px;
-//   box-shadow: rgba(149, 157, 165, 0.2) 0px 5px 10px;
-// `;
-
-// const Wrapper = styled.div`
-//   padding: 10px 20px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// `;
-
-// const Left = styled.div`
-//   flex: 1;
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const Language = styled.span`
-//   font-size: 14px;
-//   cursor: pointer;
-// `;
-
-// const SearchContainer = styled.div`
-//   border: 1px solid lightgray;
-//   display: flex;
-//   align-items: center;
-//   margin-left: 25px;
-//   padding: 5px;
-//   border-radius: 5px;
-// `;
-
-// const Input = styled.input`
-//   border: none;
-//   outline: none;
-//   font-size: 14px;
-// `;
-
-// const Center = styled.div`
-//   flex: 1;
-//   text-align: center;
-// `;
-
-// const Logo = styled(Link)`
-//   font-weight: bold;
-//   text-align: center;
-//   font-size: 32px;
-// `;
-
-// const Right = styled.div`
-//   flex: 1;
-//   display: flex;
-//   align-items: center;
-//   justify-content: flex-end;
-// `;
-
-// const MenuItem = styled(Link)`
-//   font-size: 16px;
-//   cursor: pointer;
-//   margin-right: 25px;
-//   &:hover {
-//     color: #3f51b5;
-//   }
-//   transition: all 0.3s linear;
-// `;
-
-// const Navbar = () => {
-//   return (
-//     <Container>
-//       <Wrapper>
-//         <Left>
-//           <Language>EN</Language>
-//           <SearchContainer>
-//             <Input />
-//             <SearchRounded style={{ fontSize: 16, color: 'gray' }} />
-//           </SearchContainer>
-//         </Left>
-//         <Center>
-//           <Logo to="/home">E-Commerce</Logo>
-//         </Center>
-//         <Right>
-//           <MenuItem to="/register">Register</MenuItem>
-//           <MenuItem to="/login">Sign In</MenuItem>
-//           <IconButton size="small" component={Link} to="/cart">
-//             <Badge badgeContent={4} color="primary">
-//               <ShoppingCartOutlined />
-//             </Badge>
-//           </IconButton>
-//         </Right>
-//       </Wrapper>
-//     </Container>
-//   );
-// };
-
-// export default Navbar;
-
 import {
   AppBar,
   Badge,
   Box,
   IconButton,
   InputBase,
+  LinearProgress,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from '@material-ui/core';
 import {
+  AccountCircle,
   Close,
   MenuOutlined,
   Search,
   SearchOutlined,
   ShoppingCartOutlined,
 } from '@material-ui/icons';
-import React, { useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useSnackbar } from 'notistack';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase/firebase';
+import { userSelector } from '../../store/selectors';
+import { logOutUser, userActions } from '../../store/slices/userSlice';
 import useStyles from './styles';
 
 const Navbar = () => {
   const [openSearchMobile, setOpenSearchMobile] = useState(false);
   const classes = useStyles({ openSearchMobile });
+  const dispatch = useDispatch();
+  const user = useSelector(userSelector);
+  const [isLoading, setIsLoading] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async user => {
+      try {
+        if (!user) {
+          setIsLoading(false);
+          return;
+        }
+        const token = await user.getIdToken();
+        dispatch(
+          userActions.setActiveUser({
+            name: user.displayName,
+            email: user.email,
+            id: user.uid,
+            token: token,
+          })
+        );
+        dispatch(userActions.setIsLogin());
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error.message, { variant: 'error' });
+      }
+      setIsLoading(false);
+    });
+    return unsub;
+  }, [dispatch, enqueueSnackbar]);
 
   const handleOpenSearchMobile = () => {
     setOpenSearchMobile(true);
@@ -131,6 +69,24 @@ const Navbar = () => {
 
   const handleCloseSearchMobile = () => {
     setOpenSearchMobile(false);
+  };
+
+  const handleClickMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClickLogout = async () => {
+    try {
+      await dispatch(logOutUser());
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error.message, { variant: 'error' });
+    }
+    setAnchorEl(null);
   };
 
   return (
@@ -175,20 +131,6 @@ const Navbar = () => {
           )}
 
           <Box className={classes.menuList}>
-            <Typography
-              component={Link}
-              to="/register"
-              className={classes.menuItem}
-            >
-              Register
-            </Typography>
-            <Typography
-              component={Link}
-              to="/login"
-              className={classes.menuItem}
-            >
-              Sign In
-            </Typography>
             <IconButton
               color="inherit"
               className={classes.cartButton}
@@ -200,11 +142,60 @@ const Navbar = () => {
                 <ShoppingCartOutlined />
               </Badge>
             </IconButton>
-            {/* <UserMenu /> */}
+            {!user && (
+              <>
+                <Typography
+                  component={Link}
+                  to="/register"
+                  className={classes.menuItem}
+                >
+                  Register
+                </Typography>
+                <Typography
+                  component={Link}
+                  to="/login"
+                  className={classes.menuItem}
+                >
+                  Sign In
+                </Typography>
+              </>
+            )}
+
+            {user && (
+              <IconButton
+                size="small"
+                onClick={handleClickMenu}
+                className={classes.menuItem}
+              >
+                <AccountCircle />
+              </IconButton>
+            )}
+            {user && (
+              <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMenu}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                getContentAnchorEl={null}
+              >
+                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+                <MenuItem onClick={handleClickLogout}>Logout</MenuItem>
+              </Menu>
+            )}
           </Box>
         </Toolbar>
+
+        {isLoading && <LinearProgress />}
       </AppBar>
-      {/* <div className={classes.offset}></div> */}
     </>
   );
 };

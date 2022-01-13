@@ -87,16 +87,19 @@ export default makeStyles(theme => ({
     },
   },
 
-  cartButton: {
-    marginRight: theme.spacing(2),
-  },
+  cartButton: {},
 
   menuItem: {
     fontSize: theme.spacing(2),
-    marginRight: theme.spacing(3),
+    marginLeft: theme.spacing(3),
     // '&:hover': {
     //   color: #3f51b5,
     // }
+  },
+
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   },
 
   offset: theme.mixins.toolbar,

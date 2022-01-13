@@ -1,19 +1,26 @@
-import React from 'react';
-import { signupWithEmailPassword } from '../../../firebase/firebase-utils';
-import RegisterForm from './RegisterForm/RegisterForm';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { useSnackbar } from 'notistack';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { register, userActions } from '../../../store/slices/userSlice';
+import { registerUser } from '../../../store/slices/userSlice';
+import RegisterForm from './RegisterForm/RegisterForm';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const usedispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   const handleSubmit = async newUser => {
     try {
-      const userCredential = await signupWithEmailPassword(newUser);
-      const { user } = await userCredential;
-      console.log(user);
+      const resultAction = await dispatch(registerUser(newUser));
+      unwrapResult(resultAction);
+
+      enqueueSnackbar('Register successfully!', { variant: 'success' });
+
+      navigate('/home');
     } catch (error) {
       console.log(error.message);
+      enqueueSnackbar(error.message, { variant: 'error' });
     }
   };
 
