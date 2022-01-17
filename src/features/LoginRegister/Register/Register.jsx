@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { registerUser } from '../../../store/slices/userSlice';
 import RegisterForm from './RegisterForm/RegisterForm';
 import { useNavigate } from 'react-router-dom';
+import { handleUserProfile, register } from '../../../firebase/firebase-func';
+import { onSnapshot } from 'firebase/firestore';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -12,8 +14,21 @@ const Register = () => {
   const navigate = useNavigate();
   const handleSubmit = async newUser => {
     try {
-      const resultAction = await dispatch(registerUser(newUser));
-      unwrapResult(resultAction);
+      const { email, password, displayName } = newUser;
+      const { user } = await register(email, password);
+
+      const userRef = await handleUserProfile(user, { displayName });
+
+      onSnapshot(userRef, async user => {
+        const resultAction = await dispatch(
+          registerUser({
+            id: user.id,
+            ...user.data(),
+          })
+        );
+
+        unwrapResult(resultAction);
+      });
 
       enqueueSnackbar('Register successfully!', { variant: 'success' });
 

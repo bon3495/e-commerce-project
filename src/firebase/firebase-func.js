@@ -1,15 +1,26 @@
 import {
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { useEffect, useState } from 'react';
-import { auth, provider } from './firebase';
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  where,
+  limit,
+  getDocs,
+  startAfter,
+} from 'firebase/firestore';
+import { useState } from 'react';
+import { LIMIT_PRODUCTS, SHOP_NAME } from '../constants';
+import { auth, db, provider } from './firebase';
 
-export const register = ({ email, password }) => {
+export const register = (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
@@ -25,25 +36,45 @@ export const loginWithGoogle = () => {
   return signInWithPopup(auth, provider);
 };
 
-export const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
+export const handleUserProfile = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+
+  const { uid } = userAuth;
+
+  const userRef = doc(db, SHOP_NAME.USERS, uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    const { displayName, email } = userAuth;
+    const timestamp = new Date();
+    const payload = {
+      displayName,
+      email,
+      createdDate: JSON.stringify(timestamp),
+      ...additionalData,
+    };
+
+    try {
+      await setDoc(userRef, payload);
+    } catch (error) {
+      console.log('error handle profile: ', error);
+    }
+  }
+
+  return userRef;
 };
 
-export const useAuth = () => {
-  const [curUser, setCurUser] = useState(null);
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, currentUser => {
-      if (!currentUser) {
-        setCurUser(null);
-        return;
-      }
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionsRef = collection(db, collectionKey);
 
-      setCurUser(currentUser);
-    });
+  const batch = writeBatch(db);
+  objectsToAdd.forEach(obj => {
+    const newDocRef = doc(collectionsRef);
+    batch.set(newDocRef, obj);
+  });
 
-    return unsub;
-  }, []);
-
-  return curUser;
+  return await batch.commit();
 };

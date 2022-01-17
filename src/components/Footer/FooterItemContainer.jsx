@@ -34,7 +34,7 @@ const FooterItemContainer = ({ title, list }) => {
       <FooterTitle>{title}</FooterTitle>
       <FooterList>
         {list.map((item, index) => (
-          <FooterLink key={item.id || index}>{item.type || item}</FooterLink>
+          <FooterLink key={item.id || index}>{item.title || item}</FooterLink>
         ))}
       </FooterList>
     </Container>

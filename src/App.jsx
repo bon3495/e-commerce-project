@@ -5,13 +5,12 @@ import {
   ProtectedRouteCart,
   ProtectedRouteLogin,
 } from './components/ProtectedRoute/ProtectedRoute';
-
 import {
-  Cart,
+  CartPage,
   HomePage,
   LoginPage,
-  ProductCategory,
-  ProductDetail,
+  CategoryPage,
+  ProductPage,
   RegisterPage,
 } from './pages';
 
@@ -42,12 +41,16 @@ const App = () => {
           path="/cart"
           element={
             <ProtectedRouteCart>
-              <Cart />
+              <CartPage />
             </ProtectedRouteCart>
           }
         />
-        <Route path="/category/:categoryId" element={<ProductCategory />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
+
+        <Route path="category/:categoryId" element={<CategoryPage />} />
+        <Route
+          path="category/:categoryId/:productId"
+          element={<ProductPage />}
+        />
       </Routes>
       <Footer />
     </>

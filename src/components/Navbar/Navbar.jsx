@@ -1,10 +1,11 @@
 import {
   AppBar,
+  Backdrop,
   Badge,
   Box,
+  CircularProgress,
   IconButton,
   InputBase,
-  LinearProgress,
   Menu,
   MenuItem,
   Toolbar,
@@ -18,50 +19,64 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from '@material-ui/icons';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { onAuthStateChanged } from 'firebase/auth';
+import { onSnapshot } from 'firebase/firestore';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase/firebase';
-import { userSelector } from '../../store/selectors';
-import { logOutUser, userActions } from '../../store/slices/userSlice';
+import { handleUserProfile, logOut } from '../../firebase/firebase-func';
+import { userIsLoadingSelector, userSelector } from '../../store/selectors';
+import { checkUSerSignIn, userActions } from '../../store/slices/userSlice';
 import useStyles from './styles';
 
 const Navbar = () => {
   const [openSearchMobile, setOpenSearchMobile] = useState(false);
   const classes = useStyles({ openSearchMobile });
   const dispatch = useDispatch();
-  const user = useSelector(userSelector);
-  const [isLoading, setIsLoading] = useState(true);
+  const curUser = useSelector(userSelector);
+  const isLoading = useSelector(userIsLoadingSelector);
   const [anchorEl, setAnchorEl] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async user => {
+    const unsub = onAuthStateChanged(auth, async curUser => {
       try {
-        if (!user) {
-          setIsLoading(false);
+        if (!curUser) {
+          dispatch(userActions.setIsLogin(false));
           return;
         }
-        const token = await user.getIdToken();
-        dispatch(
-          userActions.setActiveUser({
-            name: user.displayName,
-            email: user.email,
-            id: user.uid,
-            token: token,
-          })
-        );
-        dispatch(userActions.setIsLogin());
+
+        const userRef = await handleUserProfile(curUser);
+        onSnapshot(userRef, async user => {
+          const resultAction = await dispatch(
+            checkUSerSignIn({
+              id: user.id,
+              ...user.data(),
+            })
+          );
+
+          unwrapResult(resultAction);
+          dispatch(userActions.setIsLogin(true));
+        });
       } catch (error) {
         console.log(error);
         enqueueSnackbar(error.message, { variant: 'error' });
       }
-      setIsLoading(false);
     });
     return unsub;
+    // dispatch(checkUSerSignIn());
   }, [dispatch, enqueueSnackbar]);
+
+  // useEffect(() => {
+  //   if (curUser) {
+  // navigate('/home');
+
+  //   }
+  // }, [curUser, navigate]);
 
   const handleOpenSearchMobile = () => {
     setOpenSearchMobile(true);
@@ -81,7 +96,8 @@ const Navbar = () => {
 
   const handleClickLogout = async () => {
     try {
-      await dispatch(logOutUser());
+      await logOut();
+      dispatch(userActions.logOutUser());
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error.message, { variant: 'error' });
@@ -131,18 +147,20 @@ const Navbar = () => {
           )}
 
           <Box className={classes.menuList}>
-            <IconButton
-              color="inherit"
-              className={classes.cartButton}
-              size="small"
-              component={Link}
-              to="/cart"
-            >
-              <Badge badgeContent={3} color="secondary">
-                <ShoppingCartOutlined />
-              </Badge>
-            </IconButton>
-            {!user && (
+            {curUser && (
+              <IconButton
+                color="inherit"
+                className={classes.cartButton}
+                size="small"
+                component={Link}
+                to="/cart"
+              >
+                <Badge badgeContent={3} color="secondary">
+                  <ShoppingCartOutlined />
+                </Badge>
+              </IconButton>
+            )}
+            {!curUser && (
               <>
                 <Typography
                   component={Link}
@@ -161,7 +179,7 @@ const Navbar = () => {
               </>
             )}
 
-            {user && (
+            {curUser && (
               <IconButton
                 size="small"
                 onClick={handleClickMenu}
@@ -170,7 +188,7 @@ const Navbar = () => {
                 <AccountCircle />
               </IconButton>
             )}
-            {user && (
+            {curUser && (
               <Menu
                 anchorEl={anchorEl}
                 keepMounted
@@ -194,7 +212,9 @@ const Navbar = () => {
           </Box>
         </Toolbar>
 
-        {isLoading && <LinearProgress />}
+        <Backdrop className={classes.backdrop} open={isLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </AppBar>
     </>
   );

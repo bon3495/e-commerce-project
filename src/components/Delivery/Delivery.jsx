@@ -6,8 +6,8 @@ import {
 } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
-import TitleContainer from '../TitleContainer/TitleContainer';
 import { Container, Box, Grid } from '@material-ui/core';
+import { TitleContent } from '..';
 
 const DeliveryTitle = styled.h6`
   display: flex;
@@ -53,10 +53,10 @@ const deliveries = [
 const Delivery = () => {
   return (
     <>
-      <TitleContainer subTitle="Custom static block for product detail">
+      <TitleContent subTitle="Custom static block for product detail">
         DELIVERY & RETURNS
-      </TitleContainer>
-      <Box pt={3} pb={7}>
+      </TitleContent>
+      <Box pt={3} pb={10}>
         <Container>
           <Grid container spacing={4}>
             {deliveries.map(delivery => (

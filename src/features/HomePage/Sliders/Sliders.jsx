@@ -1,9 +1,8 @@
 import { Box, IconButton } from '@material-ui/core';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
 import { useState } from 'react';
-import { NAV_HEIGHT } from '../../../constants';
-import { sliderItems } from '../../../constants/fake-data';
-import Slider from './Slider/Slider';
+import { Slider } from '..';
+import { NAV_HEIGHT, sliderItems } from '../../../constants';
 import useStyles from './styles.js';
 
 const Sliders = () => {

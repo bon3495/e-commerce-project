@@ -17,9 +17,10 @@ import {
   mediumTablet,
   smallTablet,
 } from '../../constants';
-import { categories } from '../../constants/fake-data';
 import FooterItemContainer from './FooterItemContainer';
 import useStyles from './styles';
+import { useSelector } from 'react-redux';
+import { selectCategoriesSection } from '../../store/selectors';
 
 const socialsIcon = [
   <Facebook />,
@@ -189,6 +190,8 @@ const Footer = () => {
   const handleSubmit = e => {
     e.preventDefault();
   };
+
+  const categories = useSelector(selectCategoriesSection);
 
   return (
     <>

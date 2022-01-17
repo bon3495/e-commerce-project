@@ -17,15 +17,15 @@ import {
 import useStyles from './styles';
 
 const schema = yup.object().shape({
-  //   fullname: yup
-  //     .string()
-  //     .required('Please enter your full name!')
-  //     .trim()
-  //     .test(
-  //       'should has at least two words',
-  //       'Please enter at least two words!',
-  //       value => value.split(' ').length >= 2
-  //     ),
+  displayName: yup
+    .string()
+    .required('Please enter your full name!')
+    .trim()
+    .test(
+      'should has at least two words',
+      'Please enter at least two words!',
+      value => value.split(' ').length >= 2
+    ),
 
   //   isChecked: yup.bool().oneOf([true], 'Accept is required'),
 
@@ -55,11 +55,11 @@ const RegisterForm = ({ onSubmitRegister }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
+      displayName: '',
       email: '',
       password: '',
       retypePassword: '',
-      //   fullname: '',
-      //   isChecked: false,
+      // isChecked: false,
     },
     resolver: yupResolver(schema),
   });
@@ -76,12 +76,12 @@ const RegisterForm = ({ onSubmitRegister }) => {
     <FormContainer formTitle="Create Account">
       {isSubmitting && <LinearProgress className={classes.progress} />}
       <form onSubmit={handleSubmit(handleLoginSubmit)}>
-        {/* <InputField
-          name="fullname"
+        <InputField
+          name="displayName"
           label="Full Name"
           control={control}
           errors={errors}
-        /> */}
+        />
         <InputField
           name="email"
           label="Email"

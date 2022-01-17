@@ -1,11 +1,11 @@
 import React from 'react';
-import { TitleImage } from '../components';
+import { ImageTitle } from '../components';
 import { Login } from '../features/LoginRegister';
 
 const LoginPage = () => {
   return (
     <div>
-      <TitleImage>Sign In</TitleImage>
+      <ImageTitle>Sign In</ImageTitle>
       <Login />
     </div>
   );
