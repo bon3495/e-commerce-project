@@ -28,7 +28,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase/firebase';
 import { handleUserProfile, logOut } from '../../firebase/firebase-func';
-import { userIsLoadingSelector, userSelector } from '../../store/selectors';
+import {
+  selectCartData,
+  userIsLoadingSelector,
+  userSelector,
+} from '../../store/selectors';
 import { checkUSerSignIn, userActions } from '../../store/slices/userSlice';
 import useStyles from './styles';
 
@@ -41,6 +45,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const totalNumber = useSelector(selectCartData);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async curUser => {
@@ -117,7 +122,7 @@ const Navbar = () => {
               variant="h6"
               className={classes.logoHome}
               component={Link}
-              to="/home"
+              to="/"
             >
               Ecommerce
             </Typography>
@@ -155,7 +160,7 @@ const Navbar = () => {
                 component={Link}
                 to="/cart"
               >
-                <Badge badgeContent={3} color="secondary">
+                <Badge badgeContent={totalNumber} color="secondary">
                   <ShoppingCartOutlined />
                 </Badge>
               </IconButton>

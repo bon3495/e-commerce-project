@@ -8,28 +8,15 @@ import {
   smallTablet,
 } from '../../../constants';
 
-const Slide = styled.div`
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.5s linear;
-  position: absolute;
-  top: 0;
-  left: 0;
-  &.active {
-    opacity: 1;
-    visibility: visible;
-  }
-`;
-
 const ImageContainer = styled.div`
   height: 100%;
   width: 100%;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url(${props => props.img});
+`;
+
+const ImgSlider = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const InfoContainer = styled.div`
@@ -88,10 +75,12 @@ const Desc = styled.p`
   })}
 `;
 
-const Slider = ({ slider, slidersIndex }) => {
+const Slider = ({ slider }) => {
   return (
-    <Slide className={slider.id === slidersIndex ? 'active' : ''}>
-      <ImageContainer img={slider.img} />
+    <>
+      <ImageContainer>
+        <ImgSlider src={slider.img} alt={slider.title} />
+      </ImageContainer>
       <InfoContainer position={slider.position}>
         <SubTitle>{slider.sub}</SubTitle>
         <Title>{slider.title}</Title>
@@ -100,7 +89,7 @@ const Slider = ({ slider, slidersIndex }) => {
           Shop now
         </Button>
       </InfoContainer>
-    </Slide>
+    </>
   );
 };
 

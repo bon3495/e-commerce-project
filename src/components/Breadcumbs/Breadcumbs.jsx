@@ -3,9 +3,10 @@ import { Breadcrumbs, Typography, Link as LinkMui } from '@material-ui/core';
 import { NavigateNext } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { titleConvert } from '../../constants';
+import { mediumTablet, titleConvert } from '../../constants';
 
 const BreadcrumbsWrapper = styled.div`
+  display: none;
   padding: 16px 15px;
   margin-bottom: 40px;
   background-color: #f6f6f8;
@@ -21,7 +22,14 @@ const BreadcrumbsWrapper = styled.div`
   & .text {
     color: #878787;
     font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
+
+  ${mediumTablet({
+    display: 'block',
+  })}
 `;
 
 const Breadcumbs = ({ name = '', category }) => {
@@ -36,11 +44,7 @@ const Breadcumbs = ({ name = '', category }) => {
         </LinkMui>
 
         {category && (
-          <LinkMui
-            component={Link}
-            to={`/category/${category}`}
-            className="link"
-          >
+          <LinkMui component={Link} to={`/${category}`} className="link">
             {titleConvert(category)}
           </LinkMui>
         )}

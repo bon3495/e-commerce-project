@@ -46,11 +46,8 @@ const App = () => {
           }
         />
 
-        <Route path="category/:categoryId" element={<CategoryPage />} />
-        <Route
-          path="category/:categoryId/:productId"
-          element={<ProductPage />}
-        />
+        <Route path="/:categoryId" element={<CategoryPage />} />
+        <Route path="/:categoryId/:productId" element={<ProductPage />} />
       </Routes>
       <Footer />
     </>

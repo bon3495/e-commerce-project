@@ -22,3 +22,10 @@ export const selectShopData = routeName =>
 export const selectShopDataArr = createSelector([selectShop], data =>
   data ? Object.keys(data).map(key => data[key]) : []
 );
+
+const selectCart = state => state.cart.totalNumber;
+
+export const selectCartData = createSelector(
+  [selectCart],
+  totalNumber => totalNumber
+);

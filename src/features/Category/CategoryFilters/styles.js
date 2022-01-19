@@ -6,6 +6,7 @@ export default makeStyles(theme => ({
     padding: theme.spacing(2.5, 0, 1.5),
     backgroundColor: '#F5F7FA',
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+    marginBottom: theme.spacing(4),
   },
 
   title: {
@@ -25,5 +26,11 @@ export default makeStyles(theme => ({
     '&.active': {
       backgroundColor: '#ccc',
     },
+  },
+
+  brandContainer: {
+    width: '100%',
+    textAlign: 'center',
+    padding: theme.spacing(1.5),
   },
 }));

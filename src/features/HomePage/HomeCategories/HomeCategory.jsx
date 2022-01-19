@@ -4,17 +4,6 @@ import { Link, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { mediumTablet } from '../../../constants';
 
-const ImageContainer = styled.div``;
-
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
-  display: flex;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;29px 0px;
-`;
-
 const Info = styled.div`
   position: absolute;
   left: 0;
@@ -26,7 +15,7 @@ const Info = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 10px;
-  border-radius: 10px;
+  border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.2);
 `;
 
@@ -53,29 +42,35 @@ const ButtonContainer = styled.div`
 const ListItem = styled.div`
   position: relative;
   flex-shrink: 0;
+  padding-top: 125%;
+  background-image: url(${props => props.imageUrl});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 4px;
 `;
 
 const HomeCategory = ({ category }) => {
   return (
-    <ListItem>
-      <ImageContainer>
-        <Image src={category.imageUrl} alt={category.title} />
-      </ImageContainer>
-      <Info>
-        <InfoTitle>{category.title}</InfoTitle>
-        <ButtonContainer>
-          <Button
-            variant="contained"
-            color="primary"
-            component={Link}
-            to={`/category/${category.linkUrl}`}
-          >
-            Go Now!
-          </Button>
-        </ButtonContainer>
-      </Info>
-      <Outlet />
-    </ListItem>
+    <>
+      <ListItem imageUrl={category.imageUrl}>
+        <Info>
+          <InfoTitle>{category.title}</InfoTitle>
+          <ButtonContainer>
+            <Button
+              component={Link}
+              variant="contained"
+              color="primary"
+              size="large"
+              to={`/${category.routeName}`}
+            >
+              Go Now!
+            </Button>
+          </ButtonContainer>
+        </Info>
+        <Outlet />
+      </ListItem>
+    </>
   );
 };
 

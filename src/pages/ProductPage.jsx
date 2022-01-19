@@ -1,34 +1,38 @@
-import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Breadcumbs, Delivery, ImageTitle } from '../components';
-import { SHOP_NAME, titleConvert } from '../constants';
-import { ProductContent } from '../features/Product';
-import { db } from '../firebase/firebase';
+import productsApi from '../api/productsApi';
+import {
+  Breadcumbs,
+  BreadcumbsSkeleton,
+  Delivery,
+  ImageTitle,
+} from '../components';
+import { titleConvert } from '../constants';
+import useHttp from '../hook/useHttp';
+import { ProductContent, ProductSkeleton } from '../features/Product/index';
 
 const ProductPage = () => {
   const params = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [productDetail, setProductDetail] = useState(null);
-
+  const { isLoading, sendRequest } = useHttp();
+  const [product, setProduct] = useState({});
   useEffect(() => {
-    const getProductDetail = async () => {
-      const detailRef = doc(db, SHOP_NAME.PRODUCTS, params.productId);
-      const detailSnap = await getDoc(detailRef);
-      setProductDetail(detailSnap.data());
-      setIsLoading(false);
+    const handleDataResponse = data => {
+      console.log(data);
+      setProduct(data);
     };
 
-    getProductDetail();
-  }, [params.productId]);
-
-  if (isLoading) return <div>Loading...</div>;
+    sendRequest(productsApi, handleDataResponse, params.productId, 'get');
+  }, [params.productId, sendRequest]);
 
   return (
     <div>
       <ImageTitle>{titleConvert(params.categoryId)}</ImageTitle>
-      <Breadcumbs name={productDetail.name} category={params.categoryId} />
-      <ProductContent product={productDetail} isLoading={isLoading} />
+      {isLoading && <BreadcumbsSkeleton />}
+      {!isLoading && (
+        <Breadcumbs name={product.name} category={product.category} />
+      )}
+      {isLoading && <ProductSkeleton />}
+      {!isLoading && <ProductContent product={product} />}
       <Delivery />
     </div>
   );

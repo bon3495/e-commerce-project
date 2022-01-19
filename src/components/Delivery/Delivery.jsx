@@ -54,7 +54,7 @@ const Delivery = () => {
   return (
     <>
       <TitleContent subTitle="Custom static block for product detail">
-        DELIVERY & RETURNS
+        DELIVERY
       </TitleContent>
       <Box pt={3} pb={10}>
         <Container>

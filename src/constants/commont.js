@@ -6,10 +6,14 @@ export const SHOP_NAME = {
   USERS: 'users',
 };
 
+export const LIMIT_PRODUCTS = 12;
+
 export const calcNewPrice = (originPrice, discount) => {
   return ((originPrice * (100 - discount)) / 100).toFixed(2);
 };
 
 export const titleConvert = title => title[0].toUpperCase() + title.slice(1);
 
-export const LIMIT_PRODUCTS = 12;
+export const calcPagination = (total, limit) => {
+  return Math.ceil(total / limit);
+};

@@ -2,6 +2,10 @@ import { Box, Container, Grid } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 import { DetailItem, ProductForm, SizeChange } from '..';
 import { calcNewPrice, mediumTablet, smallTablet } from '../../../constants';
 
@@ -17,17 +21,38 @@ const NewGrid = styled(Grid)`
 `;
 
 const ImgContainer = styled.div`
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 `;
 
-const Image = styled.img`
+const ProductImg = styled.div`
+  border-radius: 4px;
+
+  position: relative;
+  padding-top: 110%;
+
+  background-image: url(${props => props.productImg});
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
+const Thumbnails = styled.div`
+  display: flex;
   width: 100%;
+  margin-top: 16px;
+`;
+
+const Thumbnail = styled.img`
+  display: flex;
+  width: 25%;
   height: auto;
   object-fit: cover;
-  display: flex;
-  border_radius: 10px;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: ${props =>
+    props.thumbnail === props.selectThumbnail ? '1px solid black' : 'none'};
 `;
 
 const InfoContainer = styled.div`
@@ -107,28 +132,39 @@ const Desc = styled.div`
   line-height: 1.75;
 `;
 
-const DetailContainer = styled.div``;
-
-const ProductContent = ({ product = {} }) => {
+const ProductContent = ({ product }) => {
   const [rating, setRating] = useState(5);
   const {
+    thumbnailUrls,
     name,
+    reviews,
+    orders,
+    desc,
+    brand,
     originPrice,
     discount,
-    brand,
-    orders,
-    reviews,
-    desc,
-    productUrls,
   } = product;
+  const [selectThumbnail, setSelectThumbnail] = useState(thumbnailUrls[0]);
 
   return (
-    <Box>
+    <Box pt={3} pb={5}>
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
           <NewGrid item xs={12} sm={6}>
             <ImgContainer>
-              <Image src={productUrls[0]} alt={name} />
+              <ProductImg productImg={selectThumbnail} />
+              <Thumbnails>
+                {thumbnailUrls.map((thumbnail, index) => (
+                  <Thumbnail
+                    onClick={() => setSelectThumbnail(thumbnail)}
+                    key={index}
+                    src={thumbnail}
+                    alt={`Thumbnail ${index + 1} of ${thumbnailUrls.length}`}
+                    thumbnail={thumbnail}
+                    selectThumbnail={selectThumbnail}
+                  />
+                ))}
+              </Thumbnails>
             </ImgContainer>
           </NewGrid>
           <NewGrid item xs={12} sm={6}>
@@ -158,12 +194,11 @@ const ProductContent = ({ product = {} }) => {
               </PriceContainer>
               <Desc>{desc.brand}</Desc>
 
-              <DetailContainer>
+              <Box>
                 <SizeChange />
 
-                {/* <DetailItem title="Categories :" text="Woman, Dress, T-Shirt" /> */}
                 <DetailItem title="Brand: " text={brand} />
-              </DetailContainer>
+              </Box>
 
               <ProductForm />
             </InfoContainer>

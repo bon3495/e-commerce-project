@@ -3,17 +3,19 @@ import { FavoriteBorderOutlined, SearchOutlined } from '@material-ui/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { calcNewPrice, largeHandset } from '../../../constants';
+import { calcNewPrice, largeHandset, smallTablet } from '../../constants';
+import { useDispatch } from 'react-redux';
+import { cartActions } from '../../store/slices/cartSlice';
 
 const ProductTop = styled.div`
   position: relative;
   overflow: hidden;
-`;
+  padding-top: 100%;
 
-const ImageWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  /* height: 260px; */
+  background-image: url(${props => props.imageUrl});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Image = styled.img`
@@ -70,32 +72,42 @@ const ProductBottom = styled.div`
 
 const Title = styled.div`
   flex: 1;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
+  display: -webkit-box;
 `;
 
 const TotalPrice = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 `;
 
 const OriginPrice = styled.div`
-  /* font-size: 14px; */
+  font-size: 14px;
   color: #878787;
   text-decoration: line-through;
+  ${smallTablet({
+    fontSize: '15px',
+  })}
 `;
 
 const NewPrice = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  margin-right: 8px;
+  margin-left: 8px;
   color: #ec0101;
+
+  ${smallTablet({
+    fontSize: '18px',
+  })}
 `;
 
 const Container = styled(Link)`
   overflow: hidden;
-  border-radius: 10px;
+  height: 100%;
+  border-radius: 4px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 
@@ -121,16 +133,21 @@ const Container = styled(Link)`
 `;
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch();
   const handleAddToCart = e => {
     e.preventDefault();
+    const productData = {
+      id: product.id,
+      quantity: 1,
+      price: calcNewPrice(product.originPrice, product.discount),
+      imageUrl: product.imageUrl,
+    };
+    dispatch(cartActions.addProductToCart(productData));
   };
 
   return (
-    <Container to={`${product.id}`}>
-      <ProductTop>
-        <ImageWrap>
-          <Image src={product.imageUrl} alt={product.name} />
-        </ImageWrap>
+    <Container to={`/${product.category}/${product.id}`}>
+      <ProductTop imageUrl={product.imageUrl}>
         <ButtonContainer>
           <Socials>
             <IconButton
@@ -163,11 +180,12 @@ const Product = ({ product }) => {
       <ProductBottom>
         <Title>{product.name}</Title>
         <TotalPrice>
+          <OriginPrice>{`$${product.originPrice.toFixed(2)}`}</OriginPrice>
+
           <NewPrice>{`$${calcNewPrice(
             product.originPrice,
             product.discount
           )}`}</NewPrice>
-          <OriginPrice>{`$${product.originPrice.toFixed(2)}`}</OriginPrice>
         </TotalPrice>
       </ProductBottom>
     </Container>
