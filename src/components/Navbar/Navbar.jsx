@@ -26,13 +26,15 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { MiniCart } from '..';
 import { auth } from '../../firebase/firebase';
 import { handleUserProfile, logOut } from '../../firebase/firebase-func';
 import {
-  selectCartData,
+  selectCartNumber,
   userIsLoadingSelector,
   userSelector,
 } from '../../store/selectors';
+import { cartActions } from '../../store/slices/cartSlice';
 import { checkUSerSignIn, userActions } from '../../store/slices/userSlice';
 import useStyles from './styles';
 
@@ -45,7 +47,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const totalNumber = useSelector(selectCartData);
+  const totalNumber = useSelector(selectCartNumber);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async curUser => {
@@ -110,9 +112,13 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const handleShowMiniCart = () => {
+    dispatch(cartActions.toggleMiniCart(true));
+  };
+
   return (
     <>
-      <AppBar position="static" className={classes.root}>
+      <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.navbarLogo}>
             <IconButton color="inherit" className={classes.logoSm}>
@@ -157,8 +163,9 @@ const Navbar = () => {
                 color="inherit"
                 className={classes.cartButton}
                 size="small"
-                component={Link}
-                to="/cart"
+                // component={Link}
+                // to="/cart"
+                onClick={handleShowMiniCart}
               >
                 <Badge badgeContent={totalNumber} color="secondary">
                   <ShoppingCartOutlined />
@@ -210,7 +217,6 @@ const Navbar = () => {
                 getContentAnchorEl={null}
               >
                 <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
                 <MenuItem onClick={handleClickLogout}>Logout</MenuItem>
               </Menu>
             )}
@@ -221,6 +227,8 @@ const Navbar = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       </AppBar>
+      <div className={classes.offset}></div>
+      <MiniCart />
     </>
   );
 };

@@ -22,6 +22,17 @@ export default makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius,
   },
 
+  productTitle: {
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 2,
+    // -webkit-line-clamp: 3;
+    // -webkit-box-orient: vertical;
+    // overflow: hidden;
+    // display: -webkit-box;
+  },
+
   quantityText: {
     width: '100%',
     flex: 1,
@@ -46,12 +57,21 @@ export default makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     height: '30px',
+    justifyContent: 'space-between',
     [theme.breakpoints.up('480')]: {
       marginBottom: theme.spacing(1.5),
     },
   },
 
   titleMobile: {
+    fontSize: '14px',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    paddingRight: '40px',
+    [theme.breakpoints.up('400')]: {
+      fontSize: theme.spacing(2),
+    },
     [theme.breakpoints.up('480')]: {
       fontSize: theme.spacing(2.5),
       fontWeight: '500',
@@ -59,7 +79,7 @@ export default makeStyles(theme => ({
   },
 
   textMobile: {
-    width: '80px',
+    // width: '60px',
     // display: 'none',
     [theme.breakpoints.up('sm')]: {
       // display: 'block',
@@ -67,12 +87,12 @@ export default makeStyles(theme => ({
   },
 
   quantityMobile: {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 1.5),
   },
 
   subTotalMobile: {
     fontSize: theme.spacing(2.5),
-    color: theme.palette.secondary.main,
+    // color: theme.palette.secondary.main,
     fontWeight: '500',
   },
 

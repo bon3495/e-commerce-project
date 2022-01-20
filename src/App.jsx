@@ -7,9 +7,9 @@ import {
 } from './components/ProtectedRoute/ProtectedRoute';
 import {
   CartPage,
+  CategoryPage,
   HomePage,
   LoginPage,
-  CategoryPage,
   ProductPage,
   RegisterPage,
 } from './pages';

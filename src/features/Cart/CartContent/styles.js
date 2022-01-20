@@ -8,14 +8,14 @@ export default makeStyles(theme => ({
 
   cartScreen: {
     display: 'none',
-    [theme.breakpoints.up('840')]: {
+    [theme.breakpoints.up('740')]: {
       display: 'block',
     },
   },
 
   cartMobile: {
     display: 'block',
-    [theme.breakpoints.up('840')]: {
+    [theme.breakpoints.up('740')]: {
       display: 'none',
     },
   },
@@ -24,5 +24,9 @@ export default makeStyles(theme => ({
     padding: theme.spacing(4, 0),
     display: 'flex',
     justifyContent: 'space-between',
+  },
+
+  tableTitle: {
+    minWidth: '100px',
   },
 }));

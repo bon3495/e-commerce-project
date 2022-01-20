@@ -12,17 +12,23 @@ import {
   TableRow,
 } from '@material-ui/core';
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CartItem, CartItemMobile, CartTotalSubmit } from '..';
+import { selectProductsCartData } from '../../../store/selectors';
 import useStyles from './styles';
+import { cartActions } from '../../../store/slices/cartSlice';
 
 const CartContent = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState('standard');
-
-  const handleChange = event => {
-    setValue(event.target.value);
+  const dispatch = useDispatch();
+  const { productsCart, totalNumber, totalPrice } = useSelector(
+    selectProductsCartData
+  );
+  const handleClear = () => {
+    dispatch(cartActions.clearAllProducts());
   };
+
   return (
     <Box className={classes.root}>
       <Container>
@@ -40,21 +46,31 @@ const CartContent = () => {
                         'Subtotal',
                         'Action',
                       ].map((item, index) => (
-                        <TableCell key={index} align="center">
+                        <TableCell
+                          key={index}
+                          align="center"
+                          className={classes.tableTitle}
+                        >
                           {item}
                         </TableCell>
                       ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Product item */}
-                    <CartItem />
-                    <CartItem />
+                    {productsCart.map(product => (
+                      <CartItem key={product.id} product={product} />
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
 
-              <CartItemMobile className={classes.cartMobile} />
+              {productsCart.map(product => (
+                <CartItemMobile
+                  key={product.id}
+                  product={product}
+                  className={classes.cartMobile}
+                />
+              ))}
 
               <Box className={classes.formActions}>
                 <Grid container justifyContent="space-between">
@@ -69,7 +85,11 @@ const CartContent = () => {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="contained" color="secondary">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleClear}
+                    >
                       Clear Cart
                     </Button>
                   </Grid>
@@ -78,7 +98,10 @@ const CartContent = () => {
             </form>
           </Grid>
           <Grid item xs={12} sm={6} lg={4}>
-            <CartTotalSubmit value={value} handleChange={handleChange} />
+            <CartTotalSubmit
+              totalNumber={totalNumber}
+              totalPriceProduct={totalPrice}
+            />
           </Grid>
         </Grid>
       </Container>

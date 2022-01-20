@@ -10,14 +10,21 @@ import {
   RadioGroup,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import useStyles from './styles';
 
-const CartTotalSubmit = ({ value = '', handleChange }) => {
+const CartTotalSubmit = ({ totalNumber, totalPriceProduct }) => {
   const classes = useStyles();
+  const [deliveryCost, setDeliveryCost] = useState(30);
+  const totalPrice = totalPriceProduct + deliveryCost;
+
+  const handleChange = e => {
+    setDeliveryCost(+e.target.value);
+  };
+
   return (
     <Box className={classes.totalCartContainer}>
-      <form>
+      <Box>
         <Typography className={classes.checkoutTitle}>Cart Total</Typography>
 
         <Divider className={classes.divider} />
@@ -28,42 +35,34 @@ const CartTotalSubmit = ({ value = '', handleChange }) => {
               <Typography>Total Products</Typography>
             </Grid>
             <Grid item>
-              <Typography>3</Typography>
+              <Typography>{totalNumber}</Typography>
             </Grid>
           </Grid>
         </Box>
 
         <Divider className={classes.divider} />
 
-        <Box>
+        <form>
           <FormControl component="fieldset">
             <FormLabel component="legend" className={classes.shippingTitle}>
               Choose your shipping options
             </FormLabel>
-            <RadioGroup
-              aria-label="gender"
-              name="gender1"
-              value={value}
-              onChange={handleChange}
-            >
+            <RadioGroup value={deliveryCost} onChange={handleChange}>
               <FormControlLabel
-                value="freeship"
-                control={<Radio />}
-                label="Freeship"
-              />
-              <FormControlLabel
-                value="standard"
+                checked={deliveryCost === 30}
+                value={30}
                 control={<Radio />}
                 label="Standard ($30.00)"
               />
               <FormControlLabel
-                value="express"
+                checked={deliveryCost === 50}
+                value={50}
                 control={<Radio />}
                 label="Express ($50.00)"
               />
             </RadioGroup>
           </FormControl>
-        </Box>
+        </form>
 
         <Divider className={classes.divider} />
 
@@ -75,8 +74,8 @@ const CartTotalSubmit = ({ value = '', handleChange }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <Typography className={classes.totalPriceText}>
-                $250.00
+              <Typography className={classes.totalPriceText} color="secondary">
+                {`$${totalPrice.toFixed(2)}`}
               </Typography>
             </Grid>
           </Grid>
@@ -84,7 +83,7 @@ const CartTotalSubmit = ({ value = '', handleChange }) => {
         <Button variant="contained" color="primary" fullWidth size="large">
           Proceed To Checkout
         </Button>
-      </form>
+      </Box>
     </Box>
   );
 };

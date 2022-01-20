@@ -23,9 +23,19 @@ export const selectShopDataArr = createSelector([selectShop], data =>
   data ? Object.keys(data).map(key => data[key]) : []
 );
 
-const selectCart = state => state.cart.totalNumber;
+const selectCart = state => state.cart;
 
-export const selectCartData = createSelector(
+export const selectCartNumber = createSelector(
   [selectCart],
-  totalNumber => totalNumber
+  cart => cart.totalNumber
+);
+
+export const selectProductsCartData = createSelector(
+  [selectCart],
+  cart => cart
+);
+
+export const selectShowMiniCart = createSelector(
+  [selectCart],
+  cart => cart.isShowMiniCart
 );

@@ -1,6 +1,6 @@
-import { Button, IconButton } from '@material-ui/core';
+import { Button, IconButton, Typography } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const FormContainer = styled.form`
@@ -16,34 +16,45 @@ const QuantityContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 6px;
   column-gap: 8px;
+  align-items: center;
 `;
 
 const ButtonChange = styled.div``;
 
-const QuantityInput = styled.input`
-  width: 44px;
-  border: none;
-  outline: none;
+const Quantity = styled(Typography)`
   font-size: 20px;
-  text-align: center;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
 `;
 
 const ButtonSubmit = styled.div``;
 
-const ProductForm = () => {
+const ProductForm = ({ onChangeNumber }) => {
+  const [number, setNumber] = useState(1);
+
+  const handleChangeNumber = newNumber => {
+    setNumber(prevNumber => prevNumber + newNumber);
+  };
+
+  console.log(number);
+
+  const handleSubmitNumber = () => {
+    onChangeNumber(number);
+  };
+
   return (
     <FormContainer>
       <QuantityContainer>
         <ButtonChange>
-          <IconButton size="small">
+          <IconButton
+            size="small"
+            onClick={() => handleChangeNumber(-1)}
+            disabled={number <= 1}
+          >
             <Remove />
           </IconButton>
         </ButtonChange>
-        <QuantityInput defaultValue="1" />
+        <Quantity>{number}</Quantity>
         <ButtonChange>
-          <IconButton size="small">
+          <IconButton size="small" onClick={() => handleChangeNumber(1)}>
             <Add />
           </IconButton>
         </ButtonChange>
@@ -54,6 +65,7 @@ const ProductForm = () => {
           size="large"
           color="secondary"
           style={{ borderRadius: 6 }}
+          onClick={handleSubmitNumber}
         >
           Add To Cart
         </Button>

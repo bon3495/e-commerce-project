@@ -15,3 +15,4 @@ export { default as PaginationUI } from './Pagination/Pagination';
 export { default as TitleSkeleton } from './TitleSkeleton/TitleSkeleton';
 export { default as ProductsList } from './ProductsList/ProductsList';
 export { default as BreadcumbsSkeleton } from './BreadcumbsSkeleton/BreadcumbsSkeleton';
+export { default as MiniCart } from './MiniCart/MiniCart';

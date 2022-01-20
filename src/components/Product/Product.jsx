@@ -1,11 +1,18 @@
-import { Button, IconButton } from '@material-ui/core';
+import { Box, Button, IconButton } from '@material-ui/core';
 import { FavoriteBorderOutlined, SearchOutlined } from '@material-ui/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { calcNewPrice, largeHandset, smallTablet } from '../../constants';
+import {
+  calcNewPrice,
+  largeHandset,
+  mediumScreen,
+  mediumTablet740,
+  smallTablet,
+} from '../../constants';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../../store/slices/cartSlice';
+import { Rating } from '@material-ui/lab';
 
 const ProductTop = styled.div`
   position: relative;
@@ -78,10 +85,28 @@ const Title = styled.div`
   display: -webkit-box;
 `;
 
+const BoxFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const RatingStart = styled(Rating)`
+  font-size: 1rem;
+  display: none;
+  ${mediumTablet740({
+    display: 'flex',
+  })}
+  ${mediumScreen({
+    fontSize: '1.2rem',
+  })}
+`;
+
 const TotalPrice = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-left: auto;
 `;
 
 const OriginPrice = styled.div`
@@ -138,11 +163,13 @@ const Product = ({ product }) => {
     e.preventDefault();
     const productData = {
       id: product.id,
+      name: product.name,
       quantity: 1,
-      price: calcNewPrice(product.originPrice, product.discount),
+      price: +calcNewPrice(product.originPrice, product.discount),
       imageUrl: product.imageUrl,
     };
     dispatch(cartActions.addProductToCart(productData));
+    dispatch(cartActions.toggleMiniCart(true));
   };
 
   return (
@@ -179,14 +206,21 @@ const Product = ({ product }) => {
       </ProductTop>
       <ProductBottom>
         <Title>{product.name}</Title>
-        <TotalPrice>
-          <OriginPrice>{`$${product.originPrice.toFixed(2)}`}</OriginPrice>
+        <BoxFooter>
+          <RatingStart
+            defaultValue={product.ratingValue}
+            precision={0.5}
+            readOnly
+          />
+          <TotalPrice>
+            <OriginPrice>{`$${product.originPrice.toFixed(2)}`}</OriginPrice>
 
-          <NewPrice>{`$${calcNewPrice(
-            product.originPrice,
-            product.discount
-          )}`}</NewPrice>
-        </TotalPrice>
+            <NewPrice>{`$${calcNewPrice(
+              product.originPrice,
+              product.discount
+            )}`}</NewPrice>
+          </TotalPrice>
+        </BoxFooter>
       </ProductBottom>
     </Container>
   );

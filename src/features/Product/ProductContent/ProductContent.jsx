@@ -8,6 +8,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { DetailItem, ProductForm, SizeChange } from '..';
 import { calcNewPrice, mediumTablet, smallTablet } from '../../../constants';
+import { useDispatch } from 'react-redux';
+import { cartActions } from '../../../store/slices/cartSlice';
 
 const NewGrid = styled(Grid)`
   ${smallTablet({
@@ -132,8 +134,12 @@ const Desc = styled.div`
   line-height: 1.75;
 `;
 
+const RatingStart = styled(Rating)`
+  font-size: 1.2rem;
+  margin-right: 1rem;
+`;
+
 const ProductContent = ({ product }) => {
-  const [rating, setRating] = useState(5);
   const {
     thumbnailUrls,
     name,
@@ -143,8 +149,21 @@ const ProductContent = ({ product }) => {
     brand,
     originPrice,
     discount,
+    ratingValue,
   } = product;
   const [selectThumbnail, setSelectThumbnail] = useState(thumbnailUrls[0]);
+  const dispatch = useDispatch();
+
+  const handleAddToCart = number => {
+    const productData = {
+      id: product.id,
+      name: product.name,
+      quantity: number,
+      price: +calcNewPrice(product.originPrice, product.discount),
+      imageUrl: product.imageUrl,
+    };
+    dispatch(cartActions.addProductToCart(productData));
+  };
 
   return (
     <Box pt={3} pb={5}>
@@ -172,16 +191,12 @@ const ProductContent = ({ product }) => {
               <Title>{name}</Title>
               <RatingContainer>
                 <RatingDigit>
-                  <Box component="fieldset" borderColor="transparent">
-                    <Rating
-                      name="simple-controlled"
-                      value={rating}
-                      onChange={(_, newValue) => {
-                        setRating(newValue);
-                      }}
-                    />
-                  </Box>
-                  <Digit>{rating || 0}.0</Digit>
+                  <RatingStart
+                    defaultValue={ratingValue}
+                    precision={0.5}
+                    readOnly
+                  />
+                  <Digit>{ratingValue.toFixed(1)}</Digit>
                 </RatingDigit>
                 <ReviewOrder>
                   <Review>{reviews} Reviews</Review>
@@ -200,7 +215,7 @@ const ProductContent = ({ product }) => {
                 <DetailItem title="Brand: " text={brand} />
               </Box>
 
-              <ProductForm />
+              <ProductForm onChangeNumber={handleAddToCart} />
             </InfoContainer>
           </NewGrid>
         </Grid>

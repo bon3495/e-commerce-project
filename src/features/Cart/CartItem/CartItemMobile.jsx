@@ -1,18 +1,21 @@
 import { Box, Grid, IconButton, Typography } from '@material-ui/core';
 import { AddRounded, CloseOutlined, RemoveRounded } from '@material-ui/icons';
 import React from 'react';
+import useChangeProduct from '../../../hook/useChangeProduct';
 import useStyles from './styles';
 
-const CartItemMobile = ({ className }) => {
+const CartItemMobile = ({ className, product }) => {
   const classes = useStyles();
+  const { handleDecreaseNumber, handleIncreaseNumber, handleRemoveProduct } =
+    useChangeProduct(product);
   return (
     <Box className={className}>
       <Grid container spacing={2} className={classes.cartMobileWrapper}>
         <Grid item xs={4}>
           <Box className={classes.imgMobileWrapper}>
             <img
-              src="https://template.hasthemes.com/norda/norda/assets/images/product/product-4.jpg"
-              alt="test"
+              src={product.imageUrl}
+              alt={product.name}
               className={classes.imageMobile}
             />
           </Box>
@@ -20,36 +23,41 @@ const CartItemMobile = ({ className }) => {
         <Grid item xs={8} className={classes.cartItemMobile}>
           <Box className={classes.textMobileWrapper}>
             <Typography className={classes.titleMobile}>
-              Norda Simple Backpack
+              {product.name}
             </Typography>
           </Box>
           <Box>
             <Box className={classes.textMobileWrapper}>
-              <Typography className={classes.textMobile}>Price :</Typography>
-              <Typography>$109.00</Typography>
+              {/* <Typography className={classes.textMobile}>Price :</Typography> */}
+              <Typography>{`$${product.price}`}</Typography>
             </Box>
             <Box className={classes.textMobileWrapper}>
-              <Typography className={classes.textMobile}>Quantity :</Typography>
+              {/* <Typography className={classes.textMobile}>Quantity :</Typography> */}
               <Box display="flex" alignItems="center">
-                <IconButton size="small">
+                <IconButton size="small" onClick={handleDecreaseNumber}>
                   <RemoveRounded />
                 </IconButton>
-                <Typography className={classes.quantityMobile}>1</Typography>
-                <IconButton size="small">
+                <Typography className={classes.quantityMobile}>
+                  {product.quantity}
+                </Typography>
+                <IconButton size="small" onClick={handleIncreaseNumber}>
                   <AddRounded />
                 </IconButton>
               </Box>
             </Box>
 
             <Box className={classes.textMobileWrapper}>
-              <Typography className={classes.textMobile}>Subtotal :</Typography>
+              <Typography className={classes.textMobile}>Subtotal</Typography>
               <Typography className={classes.subTotalMobile}>
-                $109.00
+                {`$${product.subTotalPrice.toFixed(2)}`}
               </Typography>
             </Box>
           </Box>
         </Grid>
-        <IconButton className={classes.closeButtonMobile}>
+        <IconButton
+          className={classes.closeButtonMobile}
+          onClick={handleRemoveProduct}
+        >
           <CloseOutlined />
         </IconButton>
       </Grid>

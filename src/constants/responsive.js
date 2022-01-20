@@ -21,6 +21,13 @@ export const smallTablet = props =>
     }
   `;
 
+export const mediumTablet740 = props =>
+  css`
+    @media only screen and (min-width: 740px) {
+      ${props}
+    }
+  `;
+
 export const mediumTablet = props =>
   css`
     @media only screen and (min-width: 840px) {
@@ -31,6 +38,13 @@ export const mediumTablet = props =>
 export const largeTablet = props =>
   css`
     @media only screen and (min-width: 960px) {
+      ${props}
+    }
+  `;
+
+export const mediumScreen = props =>
+  css`
+    @media only screen and (min-width: 1024px) {
       ${props}
     }
   `;

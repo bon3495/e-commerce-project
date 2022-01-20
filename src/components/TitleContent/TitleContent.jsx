@@ -8,6 +8,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #f5f7fa;
 `;
 
 const Title = styled.h3`

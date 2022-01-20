@@ -89,6 +89,20 @@ export default makeStyles(theme => ({
 
   cartButton: {},
 
+  cartContainer: {
+    position: 'relative',
+  },
+
+  miniCart: {
+    position: 'absolute',
+    width: '120px',
+    right: 0,
+    top: '100%',
+    background: 'blue',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
   menuItem: {
     fontSize: theme.spacing(2),
     marginLeft: theme.spacing(3),
