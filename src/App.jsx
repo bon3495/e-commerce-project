@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Footer, Header } from './components';
+import { Footer, Header, WrapperScroll } from './components';
 import {
   ProtectedRouteCart,
   ProtectedRouteLogin,
@@ -16,7 +16,7 @@ import {
 
 const App = () => {
   return (
-    <>
+    <WrapperScroll>
       <Header />
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
@@ -50,7 +50,7 @@ const App = () => {
         <Route path="/:categoryId/:productId" element={<ProductPage />} />
       </Routes>
       <Footer />
-    </>
+    </WrapperScroll>
   );
 };
 

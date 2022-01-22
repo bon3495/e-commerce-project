@@ -34,10 +34,9 @@ const ProductForm = ({ onChangeNumber }) => {
     setNumber(prevNumber => prevNumber + newNumber);
   };
 
-  console.log(number);
-
   const handleSubmitNumber = () => {
     onChangeNumber(number);
+    setNumber(1);
   };
 
   return (

@@ -1,8 +1,9 @@
+import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import productsApi from '../api/productsApi';
 import { Breadcumbs, Delivery, ImageTitle, ProductsList } from '../components';
-import { LIMIT_PRODUCTS } from '../constants';
+import { LIMIT_PRODUCTS, scrollToProducts } from '../constants';
 import useHttp from '../hook/useHttp';
 
 const CategoryPage = () => {
@@ -37,23 +38,30 @@ const CategoryPage = () => {
 
   const handleChangePagination = (_, page) => {
     setFilters(prevState => ({ ...prevState, _page: page }));
+    window.scrollTo({
+      top: scrollToProducts('category-products'),
+      behavior: 'smooth',
+    });
   };
 
   return (
-    <div>
+    <Box>
       <ImageTitle>{category.title}</ImageTitle>
       <Breadcumbs name={category.title} />
-      <ProductsList
-        isLoading={isLoading}
-        category={category}
-        products={categoryProducts}
-        pagination={pagination}
-        onChangePagination={handleChangePagination}
-        title={category.title}
-        subTitle="Go sporty this summer with this vintage navy"
-      />
+      <Box id="category-products" pt={3}>
+        <ProductsList
+          isLoading={isLoading}
+          category={category}
+          products={categoryProducts}
+          pagination={pagination}
+          onChangePagination={handleChangePagination}
+          title={category.title}
+          subTitle="Go sporty this summer with this vintage navy"
+        />
+      </Box>
+
       <Delivery />
-    </div>
+    </Box>
   );
 };
 

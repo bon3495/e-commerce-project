@@ -17,3 +17,7 @@ export const titleConvert = title => title[0].toUpperCase() + title.slice(1);
 export const calcPagination = (total, limit) => {
   return Math.ceil(total / limit);
 };
+
+export const scrollToProducts = id => {
+  return document.getElementById(id).offsetTop - NAV_HEIGHT;
+};

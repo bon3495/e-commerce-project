@@ -125,12 +125,12 @@ const NewPrice = styled.div`
 `;
 
 const OriginPrice = styled.div`
-  color: #878787;
+  color: #222;
   text-decoration: line-through;
 `;
 
 const Desc = styled.div`
-  color: #878787;
+  color: #222;
   line-height: 1.75;
 `;
 
@@ -150,6 +150,7 @@ const ProductContent = ({ product }) => {
     originPrice,
     discount,
     ratingValue,
+    color,
   } = product;
   const [selectThumbnail, setSelectThumbnail] = useState(thumbnailUrls[0]);
   const dispatch = useDispatch();
@@ -211,8 +212,9 @@ const ProductContent = ({ product }) => {
 
               <Box>
                 <SizeChange />
-
-                <DetailItem title="Brand: " text={brand} />
+                <DetailItem title="Color :" text={color} />
+                <DetailItem title="Brand :" text={brand} />
+                <DetailItem title="About :" text={desc.about[0]} />
               </Box>
 
               <ProductForm onChangeNumber={handleAddToCart} />

@@ -16,3 +16,7 @@ export { default as TitleSkeleton } from './TitleSkeleton/TitleSkeleton';
 export { default as ProductsList } from './ProductsList/ProductsList';
 export { default as BreadcumbsSkeleton } from './BreadcumbsSkeleton/BreadcumbsSkeleton';
 export { default as MiniCart } from './MiniCart/MiniCart';
+export { default as WrapperScroll } from './WrapperScroll/WrapperScroll';
+export { default as FilterPrice } from './FilterPrice/FilterPrice';
+export { default as FilterBrand } from './FilterBrand/FilterBrand';
+export { default as SortType } from './SortType/SortType';

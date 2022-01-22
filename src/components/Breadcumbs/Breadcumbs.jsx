@@ -8,7 +8,7 @@ import { mediumTablet, titleConvert } from '../../constants';
 const BreadcrumbsWrapper = styled.div`
   display: none;
   padding: 16px 15px;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
   background-color: #f6f6f8;
   font-size: 14px;
   & .link {

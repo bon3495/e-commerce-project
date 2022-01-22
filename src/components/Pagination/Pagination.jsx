@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const BoxContainer = styled(Box)`
   display: flex;
   justify-content: center;
-  margin: 30px 0 80px;
+  padding: 30px 0 80px;
   /* position: absolute;
   bottom: 0; */
 `;

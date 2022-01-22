@@ -17,7 +17,6 @@ const ProductPage = () => {
   const [product, setProduct] = useState({});
   useEffect(() => {
     const handleDataResponse = data => {
-      console.log(data);
       setProduct(data);
     };
 

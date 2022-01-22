@@ -26,7 +26,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { MiniCart } from '..';
+import { Filters, MiniCart } from '..';
 import { auth } from '../../firebase/firebase';
 import { handleUserProfile, logOut } from '../../firebase/firebase-func';
 import {
