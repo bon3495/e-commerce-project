@@ -1,55 +1,63 @@
 import {
   AppBar,
-  Backdrop,
   Badge,
   Box,
-  CircularProgress,
   IconButton,
-  InputBase,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import {
-  AccountCircle,
-  Close,
-  MenuOutlined,
-  Search,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from '@material-ui/icons';
+import { AccountCircle, ShoppingCartOutlined } from '@material-ui/icons';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { onAuthStateChanged } from 'firebase/auth';
 import { onSnapshot } from 'firebase/firestore';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { Filters, MiniCart } from '..';
+import { Link } from 'react-router-dom';
+import { MiniCart } from '..';
 import { auth } from '../../firebase/firebase';
 import { handleUserProfile, logOut } from '../../firebase/firebase-func';
-import {
-  selectCartNumber,
-  userIsLoadingSelector,
-  userSelector,
-} from '../../store/selectors';
+import { selectCartNumber, userSelector } from '../../store/selectors';
 import { cartActions } from '../../store/slices/cartSlice';
 import { checkUSerSignIn, userActions } from '../../store/slices/userSlice';
 import useStyles from './styles';
 
 const Navbar = () => {
   const [openSearchMobile, setOpenSearchMobile] = useState(false);
-  const classes = useStyles({ openSearchMobile });
   const dispatch = useDispatch();
   const curUser = useSelector(userSelector);
-  const isLoading = useSelector(userIsLoadingSelector);
   const [anchorEl, setAnchorEl] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const totalNumber = useSelector(selectCartNumber);
+  // const [searchValue, setSearchValue] = useState('');
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const classes = useStyles({ openSearchMobile, showNavbar });
+
+  const scrollNavbar = useCallback(() => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      setShowNavbar(false);
+    } else {
+      setShowNavbar(true);
+    }
+    setLastScrollTop(scrollTop);
+  }, [lastScrollTop]);
 
   useEffect(() => {
+    window.addEventListener('scroll', scrollNavbar);
+
+    return () => {
+      window.removeEventListener('scroll', scrollNavbar);
+    };
+  }, [scrollNavbar]);
+
+  useEffect(() => {
+    if (curUser) return;
     const unsub = onAuthStateChanged(auth, async curUser => {
       try {
         if (!curUser) {
@@ -75,23 +83,15 @@ const Navbar = () => {
       }
     });
     return unsub;
-    // dispatch(checkUSerSignIn());
-  }, [dispatch, enqueueSnackbar]);
+  }, [dispatch, enqueueSnackbar, curUser]);
 
-  // useEffect(() => {
-  //   if (curUser) {
-  // navigate('/home');
+  // const handleOpenSearchMobile = () => {
+  //   setOpenSearchMobile(true);
+  // };
 
-  //   }
-  // }, [curUser, navigate]);
-
-  const handleOpenSearchMobile = () => {
-    setOpenSearchMobile(true);
-  };
-
-  const handleCloseSearchMobile = () => {
-    setOpenSearchMobile(false);
-  };
+  // const handleCloseSearchMobile = () => {
+  //   setOpenSearchMobile(false);
+  // };
 
   const handleClickMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -103,6 +103,7 @@ const Navbar = () => {
 
   const handleClickLogout = async () => {
     try {
+      dispatch(cartActions.clearAllProducts());
       await logOut();
       dispatch(userActions.logOutUser());
     } catch (error) {
@@ -116,14 +117,25 @@ const Navbar = () => {
     dispatch(cartActions.toggleMiniCart(true));
   };
 
+  // const handleSearchChange = e => {
+  //   setSearchValue(e.target.value);
+  // };
+
+  // const handleSubmitSearch = e => {
+  //   e.preventDefault();
+  //   console.log(searchValue);
+
+  //   setSearchValue('');
+  // };
+
   return (
     <>
       <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.navbarLogo}>
-            <IconButton color="inherit" className={classes.logoSm}>
+            {/* <IconButton color="inherit" className={classes.logoSm}>
               <MenuOutlined />
-            </IconButton>
+            </IconButton> */}
             <Typography
               variant="h6"
               className={classes.logoHome}
@@ -134,13 +146,15 @@ const Navbar = () => {
             </Typography>
           </div>
 
-          <div className={classes.search}>
-            <IconButton color="inherit" variant="contained">
+          {/* <form className={classes.search} onSubmit={handleSubmitSearch}>
+            <IconButton type="submit" color="inherit" variant="contained">
               <Search />
             </IconButton>
             <InputBase
               placeholder="Search..."
               className={classes.searchInput}
+              onChange={handleSearchChange}
+              value={searchValue}
             />
             <IconButton
               onClick={handleCloseSearchMobile}
@@ -148,14 +162,14 @@ const Navbar = () => {
             >
               <Close />
             </IconButton>
-          </div>
+          </form>
           {!openSearchMobile && (
             <div className={classes.iconsMobile}>
               <IconButton color="inherit" onClick={handleOpenSearchMobile}>
                 <SearchOutlined />
               </IconButton>
             </div>
-          )}
+          )} */}
 
           <Box className={classes.menuList}>
             {curUser && (
@@ -222,12 +236,8 @@ const Navbar = () => {
             )}
           </Box>
         </Toolbar>
-
-        <Backdrop className={classes.backdrop} open={isLoading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
       </AppBar>
-      <div className={classes.offset}></div>
+      {/* <div className={classes.offset}></div> */}
       <MiniCart />
     </>
   );

@@ -5,19 +5,13 @@ import {
   signOut,
 } from 'firebase/auth';
 import {
+  collection,
   doc,
   getDoc,
   setDoc,
-  collection,
   writeBatch,
-  query,
-  where,
-  limit,
-  getDocs,
-  startAfter,
 } from 'firebase/firestore';
-import { useState } from 'react';
-import { LIMIT_PRODUCTS, SHOP_NAME } from '../constants';
+import { SHOP_NAME } from '../constants';
 import { auth, db, provider } from './firebase';
 
 export const register = (email, password) => {
@@ -77,4 +71,9 @@ export const addCollectionAndDocuments = async (
   });
 
   return await batch.commit();
+};
+
+export const addItemCart = async (idUser, userData) => {
+  const docRef = doc(db, 'users', idUser);
+  await setDoc(docRef, userData);
 };

@@ -1,6 +1,11 @@
 import { makeStyles } from '@material-ui/core';
+import { NAV_HEIGHT } from '../../constants';
 
 export default makeStyles(theme => ({
+  root: {
+    top: ({ showNavbar }) => (showNavbar ? '0' : `-${NAV_HEIGHT}px`),
+    transition: 'all 0.3s linear',
+  },
   toolbar: {
     justifyContent: 'space-between',
     backgroundColor: theme.palette.background.default,
@@ -11,16 +16,16 @@ export default makeStyles(theme => ({
     alignItems: 'center',
   },
   logoHome: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
+    // display: 'none',
+    // [theme.breakpoints.up('sm')]: {
+    display: 'block',
 
-      fontWeight: 'bold',
-      textAlign: 'center',
-      fontSize: theme.spacing(3),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: theme.spacing(3),
 
-      fontFamily: `Libre Baskerville, serif`,
-    },
+    fontFamily: `Libre Baskerville, serif`,
+    // },
   },
 
   logoSm: {
@@ -109,6 +114,10 @@ export default makeStyles(theme => ({
     // '&:hover': {
     //   color: #3f51b5,
     // }
+    // display: 'none',
+    // [theme.breakpoints.up('sm')]: {
+    //   display: 'inline-flex',
+    // },
   },
 
   backdrop: {

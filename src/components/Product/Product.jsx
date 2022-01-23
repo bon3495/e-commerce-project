@@ -1,18 +1,18 @@
-import { Box, Button, IconButton } from '@material-ui/core';
+import { Button, IconButton, Typography } from '@material-ui/core';
 import { FavoriteBorderOutlined, SearchOutlined } from '@material-ui/icons';
+import { Rating } from '@material-ui/lab';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   calcNewPrice,
   largeHandset,
   mediumScreen,
-  mediumTablet740,
   smallTablet,
 } from '../../constants';
-import { useDispatch } from 'react-redux';
 import { cartActions } from '../../store/slices/cartSlice';
-import { Rating } from '@material-ui/lab';
+import { userIsLoginSelector } from '../../store/selectors';
 
 const ProductTop = styled.div`
   position: relative;
@@ -88,15 +88,10 @@ const Title = styled.div`
 const BoxFooter = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
 `;
 
 const RatingStart = styled(Rating)`
   font-size: 1rem;
-  display: none;
-  ${mediumTablet740({
-    display: 'flex',
-  })}
   ${mediumScreen({
     fontSize: '1.2rem',
   })}
@@ -104,29 +99,45 @@ const RatingStart = styled(Rating)`
 
 const TotalPrice = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  align-items: flex-end;
+  column-gap: 8px;
 `;
 
 const OriginPrice = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: #878787;
   text-decoration: line-through;
   ${smallTablet({
-    fontSize: '15px',
+    fontSize: '14px',
   })}
 `;
 
 const NewPrice = styled.div`
   font-size: 16px;
-  font-weight: 500;
-  margin-left: 8px;
+  font-weight: 400;
   color: #ec0101;
 
   ${smallTablet({
     fontSize: '18px',
   })}
+`;
+
+const Discount = styled(Typography)`
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: rgba(255, 212, 36, 0.8);
+  padding: 12px 8px;
+  color: #ee4d2d;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+  font-size: 18px;
+`;
+
+const Orders = styled(Typography)`
+  color: #878787;
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 8px;
 `;
 
 const Container = styled(Link)`
@@ -144,6 +155,8 @@ const Container = styled(Link)`
     transform: translate(-50%, 0);
     opacity: 1;
   }
+  const curUser = useSelector(userSelector);
+  const cartData = useSelector(selectProductsCartData);
 
   &:hover ${Image} {
     transform: scale(1.05);
@@ -159,8 +172,16 @@ const Container = styled(Link)`
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
-  const handleAddToCart = e => {
+  const isLogin = useSelector(userIsLoginSelector);
+  const navigate = useNavigate();
+  const handleAddToCart = async e => {
     e.preventDefault();
+
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     const productData = {
       id: product.id,
       name: product.name,
@@ -203,23 +224,22 @@ const Product = ({ product }) => {
             </Button>
           </ButtonWrap>
         </ButtonContainer>
+        <Discount>-{product.discount}%</Discount>
       </ProductTop>
       <ProductBottom>
         <Title>{product.name}</Title>
+
+        <TotalPrice>
+          <NewPrice>{`$${product.newPrice.toFixed(2)}`}</NewPrice>
+          <OriginPrice>{`$${product.originPrice.toFixed(2)}`}</OriginPrice>
+        </TotalPrice>
         <BoxFooter>
           <RatingStart
             defaultValue={product.ratingValue}
             precision={0.5}
             readOnly
           />
-          <TotalPrice>
-            <OriginPrice>{`$${product.originPrice.toFixed(2)}`}</OriginPrice>
-
-            <NewPrice>{`$${calcNewPrice(
-              product.originPrice,
-              product.discount
-            )}`}</NewPrice>
-          </TotalPrice>
+          <Orders>({product.orders})</Orders>
         </BoxFooter>
       </ProductBottom>
     </Container>

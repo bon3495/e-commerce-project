@@ -8,8 +8,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { DetailItem, ProductForm, SizeChange } from '..';
 import { calcNewPrice, mediumTablet, smallTablet } from '../../../constants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../../store/slices/cartSlice';
+import { userIsLoginSelector } from '../../../store/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const NewGrid = styled(Grid)`
   ${smallTablet({
@@ -140,6 +142,8 @@ const RatingStart = styled(Rating)`
 `;
 
 const ProductContent = ({ product }) => {
+  const isLogin = useSelector(userIsLoginSelector);
+  const navigate = useNavigate();
   const {
     thumbnailUrls,
     name,
@@ -156,6 +160,11 @@ const ProductContent = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = number => {
+    if (!isLogin) {
+      navigate('/login');
+      return;
+    }
+
     const productData = {
       id: product.id,
       name: product.name,
