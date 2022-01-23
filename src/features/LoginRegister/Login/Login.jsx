@@ -33,6 +33,7 @@ const Login = () => {
 
         unwrapResult(resultAction);
         if (location.state?.from) navigate(location.state.from);
+        else navigate('/');
       });
     } catch (error) {
       console.log(error.message);
@@ -62,13 +63,6 @@ const Login = () => {
       enqueueSnackbar(error.message, { variant: 'error' });
     }
   };
-
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     navigate('/home');
-  //   }
-  // }, [isLogin, navigate]);
-
   return (
     <>
       <LoginForm
