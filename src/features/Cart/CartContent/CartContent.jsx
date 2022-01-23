@@ -79,7 +79,7 @@ const CartContent = () => {
                       variant="contained"
                       color="primary"
                       component={Link}
-                      to="/home"
+                      to="/mens"
                     >
                       Continue Shopping
                     </Button>

@@ -1,15 +1,14 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import { onSnapshot } from 'firebase/firestore';
 import { useSnackbar } from 'notistack';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   handleUserProfile,
   logIn,
   loginWithGoogle,
 } from '../../../firebase/firebase-func';
-import { userIsLoginSelector } from '../../../store/selectors';
 import { loginUser, signInGG } from '../../../store/slices/userSlice';
 import LoginForm from './LoginForm/LoginForm';
 
@@ -63,6 +62,13 @@ const Login = () => {
       enqueueSnackbar(error.message, { variant: 'error' });
     }
   };
+
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     navigate('/home');
+  //   }
+  // }, [isLogin, navigate]);
+
   return (
     <>
       <LoginForm
