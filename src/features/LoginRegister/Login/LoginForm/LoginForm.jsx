@@ -9,7 +9,7 @@ import {
 import 'firebase/compat/auth';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   FormContainer,
@@ -32,6 +32,8 @@ const schema = yup.object().shape({
 
 const LoginForm = ({ onLoginSubmit, onSignInGG }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     control,
@@ -50,6 +52,10 @@ const LoginForm = ({ onLoginSubmit, onSignInGG }) => {
 
     await onLoginSubmit(values);
   };
+
+  // const handleClickRegister = () => {
+  //   navigate('/register', { state: { from: location }, replace: true });
+  // };
 
   return (
     <FormContainer formTitle="Sign In">
@@ -93,6 +99,7 @@ const LoginForm = ({ onLoginSubmit, onSignInGG }) => {
           Sign in with Google
         </Button>
         <Box className={classes.links} textAlign="right">
+          {/* <LinkMui component={Link} to="/register" className={classes.link}> */}
           <LinkMui component={Link} to="/register" className={classes.link}>
             Dont't have an account yet? Sign up here
           </LinkMui>

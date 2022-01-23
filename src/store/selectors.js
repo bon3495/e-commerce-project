@@ -8,6 +8,10 @@ export const userIsLoadingSelector = state => state.user.isLoading;
 
 export const userIsLoginSelector = state => state.user.isLogin;
 
+const selectAuth = state => state.user;
+
+export const selectAuthData = createSelector([selectAuth], user => user);
+
 const selectCategories = state => state.categories;
 export const selectCategoriesSection = createSelector(
   [selectCategories],

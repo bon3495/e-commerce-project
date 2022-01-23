@@ -111,6 +111,7 @@ export default makeStyles(theme => ({
   menuItem: {
     fontSize: theme.spacing(2),
     marginLeft: theme.spacing(3),
+    cursor: 'pointer',
     // '&:hover': {
     //   color: #3f51b5,
     // }

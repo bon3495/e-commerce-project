@@ -12,6 +12,7 @@ export default makeStyles(theme => ({
   },
 
   link: {
+    cursor: 'pointer',
     [theme.breakpoints.down('460')]: {
       fontSize: '14px',
     },

@@ -15,7 +15,7 @@ import { onSnapshot } from 'firebase/firestore';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MiniCart } from '..';
 import { auth } from '../../firebase/firebase';
 import { handleUserProfile, logOut } from '../../firebase/firebase-func';
@@ -30,12 +30,13 @@ const Navbar = () => {
   const curUser = useSelector(userSelector);
   const [anchorEl, setAnchorEl] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const totalNumber = useSelector(selectCartNumber);
   // const [searchValue, setSearchValue] = useState('');
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [showNavbar, setShowNavbar] = useState(true);
   const classes = useStyles({ openSearchMobile, showNavbar });
+  const location = useLocation();
 
   const scrollNavbar = useCallback(() => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -104,8 +105,8 @@ const Navbar = () => {
   const handleClickLogout = async () => {
     try {
       dispatch(cartActions.clearAllProducts());
-      await logOut();
       dispatch(userActions.logOutUser());
+      await logOut();
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error.message, { variant: 'error' });
@@ -127,6 +128,14 @@ const Navbar = () => {
 
   //   setSearchValue('');
   // };
+
+  const handleClickSignIn = () => {
+    navigate('/login', { state: { from: location }, replace: true });
+  };
+
+  const handleClickRegister = () => {
+    navigate('/register', { state: { from: location }, replace: true });
+  };
 
   return (
     <>
@@ -189,16 +198,18 @@ const Navbar = () => {
             {!curUser && (
               <>
                 <Typography
-                  component={Link}
-                  to="/register"
+                  // component={Link}
+                  // to="/register"
                   className={classes.menuItem}
+                  onClick={handleClickRegister}
                 >
                   Register
                 </Typography>
                 <Typography
-                  component={Link}
-                  to="/login"
+                  // component={Link}
+                  // to="/login"
                   className={classes.menuItem}
+                  onClick={handleClickSignIn}
                 >
                   Sign In
                 </Typography>

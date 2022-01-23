@@ -1,6 +1,8 @@
 import { Box, Container, Grid } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -8,10 +10,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { DetailItem, ProductForm, SizeChange } from '..';
 import { calcNewPrice, mediumTablet, smallTablet } from '../../../constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../../../store/slices/cartSlice';
 import { userIsLoginSelector } from '../../../store/selectors';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { cartActions } from '../../../store/slices/cartSlice';
 
 const NewGrid = styled(Grid)`
   ${smallTablet({
@@ -162,7 +162,7 @@ const ProductContent = ({ product }) => {
 
   const handleAddToCart = number => {
     if (!isLogin) {
-      navigate('/login', { state: { from: location } });
+      navigate('/login', { state: { from: location }, replace: true });
       return;
     }
 
