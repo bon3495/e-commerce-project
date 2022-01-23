@@ -1,11 +1,18 @@
-import { Box, Button, ClickAwayListener, Typography } from '@material-ui/core';
-import { MonetizationOnOutlined } from '@material-ui/icons';
+import {
+  Box,
+  Button,
+  ClickAwayListener,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
+import { Close, MonetizationOnOutlined } from '@material-ui/icons';
 import React, { useState, useEffect } from 'react';
 import productsApi from '../../api/productsApi';
 import useHttp from '../../hook/useHttp';
 import useFetch from '../../hook/useFetch';
 import {
   ButtonStyled,
+  CloseButton,
   DividerPriceStyled,
   PriceButtonBox,
   PriceRangeButton,
@@ -72,7 +79,7 @@ const FilterPrice = ({ onChangePrice }) => {
             <Typography>{`$${priceValue[1]}`}</Typography>
           </PriceTextBox>
 
-          <Box px={2} my={1}>
+          <Box px={1} my={1}>
             <PriceRangeButton
               valueLabelDisplay="off"
               value={priceValue}
@@ -98,6 +105,10 @@ const FilterPrice = ({ onChangePrice }) => {
               Search
             </Button>
           </PriceButtonBox>
+
+          <CloseButton size="small" onClick={handleClosePriceRange}>
+            <Close />
+          </CloseButton>
         </PriceRangeContent>
       </PriceRangeContainer>
     </ClickAwayListener>

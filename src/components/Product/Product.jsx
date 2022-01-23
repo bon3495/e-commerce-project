@@ -3,7 +3,13 @@ import { FavoriteBorderOutlined, SearchOutlined } from '@material-ui/icons';
 import { Rating } from '@material-ui/lab';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import styled from 'styled-components';
 import {
   calcNewPrice,
@@ -174,11 +180,13 @@ const Product = ({ product }) => {
   const dispatch = useDispatch();
   const isLogin = useSelector(userIsLoginSelector);
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
   const handleAddToCart = async e => {
     e.preventDefault();
 
     if (!isLogin) {
-      navigate('/login');
+      navigate('/login', { state: { from: location } });
       return;
     }
 
@@ -194,7 +202,7 @@ const Product = ({ product }) => {
   };
 
   return (
-    <Container to={`/${product.category}/${product.id}`}>
+    <Container to={`/mens/${product.category}/${product.id}`}>
       <ProductTop imageUrl={product.imageUrl}>
         <ButtonContainer>
           <Socials>

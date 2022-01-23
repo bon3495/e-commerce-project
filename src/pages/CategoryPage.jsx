@@ -1,8 +1,14 @@
-import { Box } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import productsApi from '../api/productsApi';
-import { Breadcumbs, Delivery, ImageTitle, ProductsList } from '../components';
+import {
+  Breadcumbs,
+  Delivery,
+  ImageTitle,
+  ProductsList,
+  Toolbar,
+} from '../components';
 import { LIMIT_PRODUCTS, scrollToProducts } from '../constants';
 import useHttp from '../hook/useHttp';
 
@@ -45,23 +51,24 @@ const CategoryPage = () => {
   };
 
   return (
-    <Box>
+    <Toolbar>
       <ImageTitle>{category.title}</ImageTitle>
       <Breadcumbs name={category.title} />
-      <Box id="category-products" pt={3}>
-        <ProductsList
-          isLoading={isLoading}
-          category={category}
-          products={categoryProducts}
-          pagination={pagination}
-          onChangePagination={handleChangePagination}
-          title={category.title}
-          subTitle="Go sporty this summer with this vintage navy"
-        />
-      </Box>
-
+      <Container>
+        <Box id="category-products" pt={3}>
+          <ProductsList
+            isLoading={isLoading}
+            category={category}
+            products={categoryProducts}
+            pagination={pagination}
+            onChangePagination={handleChangePagination}
+            title={category.title}
+            subTitle="Go sporty this summer with this vintage navy"
+          />
+        </Box>
+      </Container>
       <Delivery />
-    </Box>
+    </Toolbar>
   );
 };
 

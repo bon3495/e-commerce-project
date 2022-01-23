@@ -11,7 +11,7 @@ import { calcNewPrice, mediumTablet, smallTablet } from '../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../../store/slices/cartSlice';
 import { userIsLoginSelector } from '../../../store/selectors';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 const NewGrid = styled(Grid)`
   ${smallTablet({
@@ -144,6 +144,7 @@ const RatingStart = styled(Rating)`
 const ProductContent = ({ product }) => {
   const isLogin = useSelector(userIsLoginSelector);
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     thumbnailUrls,
     name,
@@ -161,7 +162,7 @@ const ProductContent = ({ product }) => {
 
   const handleAddToCart = number => {
     if (!isLogin) {
-      navigate('/login');
+      navigate('/login', { state: { from: location } });
       return;
     }
 

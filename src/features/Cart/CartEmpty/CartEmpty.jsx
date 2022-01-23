@@ -9,7 +9,8 @@ const CartEmpty = () => {
     <Container className={classes.container}>
       <Box>
         <img
-          src="http://amjpearls.com/assets/images/largeCartIcon.png"
+          // src="http://amjpearls.com/assets/images/largeCartIcon.png"
+          src="https://freepikpsd.com/file/2019/10/empty-cart-png-Transparent-Images.png"
           alt="empty cart"
           className={classes.cartImg}
         />

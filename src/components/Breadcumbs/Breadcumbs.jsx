@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { mediumTablet, titleConvert } from '../../constants';
 
 const BreadcrumbsWrapper = styled.div`
-  display: none;
+  /* display: none; */
   padding: 16px 15px;
   /* margin-bottom: 40px; */
   background-color: #f6f6f8;
@@ -27,9 +27,9 @@ const BreadcrumbsWrapper = styled.div`
     overflow: hidden;
   }
 
-  ${mediumTablet({
+  /* ${mediumTablet({
     display: 'block',
-  })}
+  })} */
 `;
 
 const Breadcumbs = ({ name = '', category }) => {
@@ -40,11 +40,11 @@ const Breadcumbs = ({ name = '', category }) => {
         aria-label="breadcrumb"
       >
         <LinkMui component={Link} to="/" className="link">
-          Home
+          Mens
         </LinkMui>
 
         {category && (
-          <LinkMui component={Link} to={`/${category}`} className="link">
+          <LinkMui component={Link} to={`../${category}`} className="link">
             {titleConvert(category)}
           </LinkMui>
         )}

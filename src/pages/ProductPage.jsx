@@ -6,6 +6,7 @@ import {
   BreadcumbsSkeleton,
   Delivery,
   ImageTitle,
+  Toolbar,
 } from '../components';
 import { titleConvert } from '../constants';
 import useHttp from '../hook/useHttp';
@@ -24,7 +25,7 @@ const ProductPage = () => {
   }, [params.productId, sendRequest]);
 
   return (
-    <div>
+    <Toolbar>
       <ImageTitle>{titleConvert(params.categoryId)}</ImageTitle>
       {isLoading && <BreadcumbsSkeleton />}
       {!isLoading && (
@@ -33,7 +34,7 @@ const ProductPage = () => {
       {isLoading && <ProductSkeleton />}
       {!isLoading && <ProductContent product={product} />}
       <Delivery />
-    </div>
+    </Toolbar>
   );
 };
 

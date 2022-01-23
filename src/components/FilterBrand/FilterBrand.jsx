@@ -4,7 +4,7 @@ import productsApi from '../../api/productsApi';
 import useHttp from '../../hook/useHttp';
 import { FormControlStyled } from './styles';
 
-const FilterBrand = ({ currentBrand, onChangeBrand }) => {
+const FilterBrand = ({ currentBrand = '', onChangeBrand }) => {
   const [brands, setBrands] = useState([]);
   const { sendRequest, isLoading } = useHttp();
 

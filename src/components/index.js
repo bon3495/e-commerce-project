@@ -20,3 +20,4 @@ export { default as WrapperScroll } from './WrapperScroll/WrapperScroll';
 export { default as FilterPrice } from './FilterPrice/FilterPrice';
 export { default as FilterBrand } from './FilterBrand/FilterBrand';
 export { default as SortType } from './SortType/SortType';
+export { default as Toolbar } from './Toolbar/Toolbar';

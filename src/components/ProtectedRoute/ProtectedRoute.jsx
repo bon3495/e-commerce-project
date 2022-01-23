@@ -1,23 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { userIsLoginSelector } from '../../store/selectors';
 
-export const ProtectedRouteCart = ({ children }) => {
+const ProtectedRoute = () => {
   const isLogin = useSelector(userIsLoginSelector);
+  const location = useLocation();
 
-  if (!isLogin) {
-    return <Navigate to="/login" />;
-  }
-
-  return children;
+  return isLogin ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/login" replace state={{ from: location }} />
+  );
 };
 
-export const ProtectedRouteLogin = ({ children }) => {
-  const isLogin = useSelector(userIsLoginSelector);
-
-  if (isLogin) {
-    return <Navigate to="/home" />;
-  }
-  return children;
-};
+export default ProtectedRoute;

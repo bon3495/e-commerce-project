@@ -1,13 +1,18 @@
 import { Avatar, Box, Container, Paper, Typography } from '@material-ui/core';
 import { LockOutlined } from '@material-ui/icons';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import useStyles from './styles';
 
 const FormContainer = ({ children, formTitle }) => {
   const classes = useStyles();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} ref={scrollRef}>
       <Container component="main" maxWidth="sm">
         <Paper elevation={0}>
           <Box className={classes.wrapper}>

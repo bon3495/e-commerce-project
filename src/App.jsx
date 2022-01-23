@@ -1,56 +1,50 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Footer, Header, WrapperScroll } from './components';
-import {
-  ProtectedRouteCart,
-  ProtectedRouteLogin,
-} from './components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import {
   CartPage,
   CategoryPage,
   HomePage,
   LoginPage,
+  MensPage,
+  PageNotFound,
   ProductPage,
   RegisterPage,
 } from './pages';
 
 const App = () => {
   return (
-    <WrapperScroll>
+    <>
       <Header />
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route
-          path="/login"
-          element={
-            <ProtectedRouteLogin>
-              <LoginPage />
-            </ProtectedRouteLogin>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <ProtectedRouteLogin>
-              <RegisterPage />
-            </ProtectedRouteLogin>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRouteCart>
-              <CartPage />
-            </ProtectedRouteCart>
-          }
-        />
+        <Route element={<WrapperScroll />}>
+          <Route path="/" element={<Navigate to="/mens" />} />
+          <Route path="/mens" element={<MensPage />}>
+            <Route path="" element={<HomePage />} />
+            <Route path=":categoryId" element={<CategoryPage />} />
+            <Route path=":categoryId/:productId" element={<ProductPage />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/cart" element={<CartPage />} />
+          </Route>
+          <Route path="/*" element={<PageNotFound />} />
+        </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
+        {/* 
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/cart" element={<CartPage />} />
+        </Route>
         <Route path="/:categoryId" element={<CategoryPage />} />
         <Route path="/:categoryId/:productId" element={<ProductPage />} />
+        <Route path="/*" element={<PageNotFound />} /> */}
       </Routes>
       <Footer />
-    </WrapperScroll>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { NAV_HEIGHT } from '../../../constants/commont';
 
 export default makeStyles(theme => ({
   root: {
@@ -7,7 +6,6 @@ export default makeStyles(theme => ({
     height: '220px',
     display: 'flex',
     position: 'relative',
-    marginTop: `${NAV_HEIGHT}px`,
     // [theme.breakpoints.between('480', 'sm')]: {
     //   height: '300px',
     // },

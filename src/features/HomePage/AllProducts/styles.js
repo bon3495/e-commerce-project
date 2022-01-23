@@ -11,6 +11,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import styled from 'styled-components';
+import { Skeleton } from '@material-ui/lab';
 
 export const ContainerStyled = styled(Container)`
   /* background-color: #ccc; */
@@ -116,4 +117,48 @@ export const InputBaseStyled = styled(InputBase)`
     padding-left: 20px;
     padding-right: 20px;
   }
+`;
+
+export const SearchContainer = styled.form`
+  display: flex;
+  align-items: center;
+  height: 56px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const SearchInput = styled.div`
+  padding-left: 15px;
+  flex: 1;
+  width: 100%;
+  & div {
+    width: 100%;
+  }
+`;
+
+export const SearchIcon = styled.button`
+  color: #666;
+  padding: 0 15px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+`;
+
+export const PageNotFound = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 60px auto 80px;
+  width: 60%;
+`;
+
+export const ImageNotFound = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+`;
+
+export const SkeletonStyled = styled(Skeleton)`
+  height: 56px;
+  border-radius: 4px;
 `;

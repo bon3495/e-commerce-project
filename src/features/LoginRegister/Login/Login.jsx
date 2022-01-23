@@ -3,7 +3,7 @@ import { onSnapshot } from 'firebase/firestore';
 import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   handleUserProfile,
   logIn,
@@ -16,8 +16,8 @@ import LoginForm from './LoginForm/LoginForm';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
-  const isLogin = useSelector(userIsLoginSelector);
   const handleSubmitLogin = async userLogin => {
     try {
       const { user } = await logIn(userLogin);
@@ -32,6 +32,7 @@ const Login = () => {
         );
 
         unwrapResult(resultAction);
+        if (location.state?.from) navigate(location.state.from);
       });
     } catch (error) {
       console.log(error.message);
@@ -54,17 +55,19 @@ const Login = () => {
 
         unwrapResult(resultAction);
       });
+
+      if (location.state?.from) navigate(location.state.from);
     } catch (error) {
       console.log(error.message);
       enqueueSnackbar(error.message, { variant: 'error' });
     }
   };
 
-  useEffect(() => {
-    if (isLogin) {
-      navigate('/home');
-    }
-  }, [isLogin, navigate]);
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     navigate('/home');
+  //   }
+  // }, [isLogin, navigate]);
 
   return (
     <>

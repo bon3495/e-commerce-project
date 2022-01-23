@@ -1,13 +1,13 @@
 import React from 'react';
-import { ImageTitle } from '../components';
+import { ImageTitle, Toolbar } from '../components';
 import { Register } from '../features/LoginRegister';
 
 const RegisterPage = () => {
   return (
-    <div>
+    <Toolbar>
       <ImageTitle>Register</ImageTitle>
       <Register />
-    </div>
+    </Toolbar>
   );
 };
 

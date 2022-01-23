@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mediumTablet } from '../../constants';
+import { mediumTablet, NAV_HEIGHT } from '../../constants';
 
 const TitleWrapper = styled.div`
-  display: none;
+  /* display: none; */
   background-color: #f7f7f7;
   padding: 55px 0;
   text-align: center;
@@ -22,9 +22,9 @@ const TitleWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-  ${mediumTablet({
+  /* ${mediumTablet({
     display: 'block',
-  })}
+  })} */
 `;
 
 const TitleContent = styled.p`

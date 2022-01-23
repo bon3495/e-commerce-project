@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
-const WrapperScroll = ({ children }) => {
+const WrapperScroll = () => {
   const { pathname } = useLocation();
 
   useLayoutEffect(() => {
@@ -11,7 +11,7 @@ const WrapperScroll = ({ children }) => {
     });
   }, [pathname]);
 
-  return children;
+  return <Outlet />;
 };
 
 export default WrapperScroll;

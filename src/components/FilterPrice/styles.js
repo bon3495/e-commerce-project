@@ -5,6 +5,7 @@ import {
   Typography,
   withStyles,
   Button,
+  IconButton,
 } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -12,6 +13,7 @@ export const PriceTextBox = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 24px;
 `;
 
 export const PriceButtonBox = styled(Box)`
@@ -70,7 +72,7 @@ export const PriceRangeContent = styled(Box)`
   top: 100%;
   z-index: 1000;
   background-color: #f6f6f7;
-  width: 340px;
+  width: 350px;
   border-radius: 4px;
   box-shadow: 0 5px 13px -2px rgb(0 0 0 / 80%);
   transition: all 0.3s linear;
@@ -89,5 +91,10 @@ export const TypographyPriceStyled = styled(Typography)`
   font-size: 14px;
   font-style: italic;
   font-weight: 300;
-  margin-bottom: 12px;
+`;
+
+export const CloseButton = styled(IconButton)`
+  position: absolute;
+  right: 10px;
+  top: 10px;
 `;

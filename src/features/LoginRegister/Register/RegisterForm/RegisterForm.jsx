@@ -73,7 +73,7 @@ const RegisterForm = ({ onSubmitRegister }) => {
   };
 
   return (
-    <FormContainer formTitle="Create Account">
+    <FormContainer formTitle="Create Account" id="register">
       {isSubmitting && <LinearProgress className={classes.progress} />}
       <form onSubmit={handleSubmit(handleLoginSubmit)}>
         <InputField

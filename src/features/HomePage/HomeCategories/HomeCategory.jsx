@@ -62,7 +62,7 @@ const HomeCategory = ({ category }) => {
               variant="contained"
               color="primary"
               size="large"
-              to={`/${category.routeName}`}
+              to={`${category.routeName}`}
             >
               Go Now!
             </Button>
