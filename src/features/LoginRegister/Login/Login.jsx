@@ -34,7 +34,13 @@ const Login = () => {
 
         unwrapResult(resultAction);
       });
-      if (location.state?.from) navigate(location.state.from);
+      // if (location.state?.from) navigate(location.state.from);
+      const isLocation = location?.state?.from || null;
+      if (!isLocation && isLogin) {
+        navigate('/mens');
+      } else {
+        navigate(location.state.from);
+      }
     } catch (error) {
       console.log(error.message);
       enqueueSnackbar(error.message, { variant: 'error' });
@@ -56,18 +62,22 @@ const Login = () => {
 
         unwrapResult(resultAction);
       });
+      const isLocation = location?.state?.from || null;
+      if (!isLocation && isLogin) {
+        navigate('/mens');
+      } else {
+        navigate(location.state.from);
+      }
+      // if (location.state?.from) navigate(location.state.from);
     } catch (error) {
       console.log(error.message);
       enqueueSnackbar(error.message, { variant: 'error' });
     }
   };
 
-  useEffect(() => {
-    const isLocation = location?.state?.from || null;
-    if (!isLocation && isLogin) {
-      navigate('/mens');
-    }
-  }, [isLogin, navigate, location]);
+  console.log(location?.state?.from || null);
+
+  // useEffect(() => {}, [isLogin, navigate, location]);
 
   return (
     <>
