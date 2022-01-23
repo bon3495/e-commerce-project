@@ -2,6 +2,7 @@
   "name": "crwn-clothing",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://bon3495.github.io/mens/",
   "dependencies": {
     "@hookform/devtools": "^4.0.1",
     "@hookform/resolvers": "^2.8.5",
@@ -16,6 +17,7 @@
     "clsx": "^1.1.1",
     "firebase": "^9.6.2",
     "firebaseui": "^6.0.0",
+    "gh-pages": "^3.2.3",
     "node-sass": "^7.0.1",
     "notistack": "^1.0.10",
     "query-string": "^7.1.0",
@@ -37,7 +39,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

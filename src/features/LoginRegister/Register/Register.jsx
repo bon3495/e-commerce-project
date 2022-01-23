@@ -32,7 +32,7 @@ const Register = () => {
 
       enqueueSnackbar('Register successfully!', { variant: 'success' });
 
-      navigate('/');
+      navigate('/mens');
     } catch (error) {
       console.log(error.message);
       enqueueSnackbar(error.message, { variant: 'error' });

@@ -33,7 +33,7 @@ const Login = () => {
 
         unwrapResult(resultAction);
         if (location.state?.from) navigate(location.state.from);
-        else navigate('/');
+        else navigate('/mens');
       });
     } catch (error) {
       console.log(error.message);
