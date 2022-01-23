@@ -19,7 +19,7 @@ const CartEmpty = () => {
         variant="contained"
         color="primary"
         component={Link}
-        to="/home"
+        to="/mens"
         className={classes.emptyButton}
       >
         Continue Shopping
