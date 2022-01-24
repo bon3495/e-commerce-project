@@ -1,32 +1,28 @@
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import productsApi from '../../api/productsApi';
-import useHttp from '../../hook/useHttp';
 import { FormControlStyled } from './styles';
 
-const FilterBrand = ({ currentBrand = '', onChangeBrand }) => {
-  const [brands, setBrands] = useState([]);
-  const { sendRequest, isLoading } = useHttp();
+const FilterBrand = ({ currentBrand = '', onChangeBrand, brands }) => {
+  // const [brands, setBrands] = useState([]);
+  // const { sendRequest, isLoading } = useHttp();
+  // useEffect(() => {
+  //   const handleData = dataResult => {
+  //     const data = dataResult;
+  //     const brandsData = new Set(data.map(product => product.brand));
+  //     const newBrands = Array.from(brandsData).map(brand => {
+  //       const quantity = data.filter(product => product.brand === brand);
+  //       return {
+  //         brand,
+  //         quantity: quantity.length,
+  //       };
+  //     });
 
-  useEffect(() => {
-    const handleData = dataResult => {
-      const data = dataResult;
-      const brandsData = new Set(data.map(product => product.brand));
-      const newBrands = Array.from(brandsData).map(brand => {
-        const quantity = data.filter(product => product.brand === brand);
-        return {
-          brand,
-          quantity: quantity.length,
-        };
-      });
-
-      setBrands(newBrands);
-    };
-    sendRequest(productsApi, handleData, {}, 'getAll');
-  }, [sendRequest]);
+  //     setBrands(newBrands);
+  //   };
+  //   sendRequest(productsApi, handleData, {}, 'getAll');
+  // }, [sendRequest]);
 
   const handleChangeBrand = e => {
-    onChangeBrand(e.target.value);
+    if (onChangeBrand) onChangeBrand(e.target.value);
   };
 
   return (
@@ -44,7 +40,6 @@ const FilterBrand = ({ currentBrand = '', onChangeBrand }) => {
         <MenuItem value="">
           <em>Default</em>
         </MenuItem>
-        {isLoading && <MenuItem>Loading...</MenuItem>}
         {brands.map(b => (
           <MenuItem key={b.brand} value={b.brand}>
             {b.brand} ({b.quantity})

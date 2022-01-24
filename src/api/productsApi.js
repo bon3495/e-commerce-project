@@ -28,6 +28,21 @@ const productsApi = {
     };
   },
 
+  getBrands: async () => {
+    const url = '/products';
+    const data = await axiosClient.get(url);
+    const brandsData = new Set(data.map(product => product.brand));
+    const brands = Array.from(brandsData).map(brand => {
+      const quantity = data.filter(product => product.brand === brand);
+      return {
+        brand,
+        quantity: quantity.length,
+      };
+    });
+
+    return brands;
+  },
+
   get(id) {
     const url = `/products/${id}`;
     return axiosClient.get(url);

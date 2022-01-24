@@ -1,14 +1,6 @@
-import {
-  Box,
-  Button,
-  ClickAwayListener,
-  IconButton,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, ClickAwayListener, Typography } from '@material-ui/core';
 import { Close, MonetizationOnOutlined } from '@material-ui/icons';
-import React, { useState, useEffect } from 'react';
-import productsApi from '../../api/productsApi';
-import useHttp from '../../hook/useHttp';
+import React, { useEffect, useState } from 'react';
 import useFetch from '../../hook/useFetch';
 import {
   ButtonStyled,
@@ -22,7 +14,7 @@ import {
   TypographyPriceStyled,
 } from './styles';
 
-const FilterPrice = ({ onChangePrice }) => {
+const FilterPrice = ({ onChangePrice, currentValues }) => {
   const value = useFetch();
   const [priceValue, setPriceValue] = useState(value);
   const [openPriceRange, setOpenPriceRange] = useState(false);
@@ -59,6 +51,8 @@ const FilterPrice = ({ onChangePrice }) => {
   useEffect(() => {
     setPriceValue(value);
   }, [value]);
+
+  console.log(priceValue);
 
   return (
     <ClickAwayListener onClickAway={handleClosePriceRange}>

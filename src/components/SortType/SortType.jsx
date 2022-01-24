@@ -1,13 +1,12 @@
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
-import { useState } from 'react';
 import queryString from 'query-string';
+import React from 'react';
 import { FormControlStyled } from './styles';
 
-const SortType = ({ onChangeSort }) => {
-  const [sortType, setSortType] = useState('');
+const SortType = ({ onChangeSort, currentSort }) => {
   const handleChangeSortType = event => {
-    setSortType(event.target.value);
-    const queryPrams = queryString.parse(event.target.value);
+    const { value } = event.target;
+    const queryPrams = queryString.parse(value);
     if (onChangeSort) onChangeSort(queryPrams);
   };
 
@@ -15,27 +14,35 @@ const SortType = ({ onChangeSort }) => {
     <FormControlStyled variant="outlined">
       <InputLabel color="primary">Sort</InputLabel>
       <Select
-        value={sortType}
+        value={currentSort}
         onChange={handleChangeSortType}
         label="Sort by"
         color="primary"
       >
-        <MenuItem value="">
+        <MenuItem value="_order=&_sort=">
           <em>Default</em>
         </MenuItem>
-        <MenuItem value="_sort=orders&_order=desc">Best Seller</MenuItem>
-        <MenuItem value="_sort=reviews&_order=desc">The Most Reviews</MenuItem>
-        <MenuItem value="_sort=ratingValue&_order=desc">
+        <MenuItem value="_order=desc&_sort=orders" name="Best Seller">
+          Best Seller
+        </MenuItem>
+        <MenuItem value="_order=desc&_sort=reviews" name="The Most Reviews">
+          The Most Reviews
+        </MenuItem>
+        <MenuItem value="_order=desc&_sort=ratingValue" name="Highest Rating">
           Highest Rating
         </MenuItem>
-        <MenuItem value="_sort=discount&_order=desc">Highest Discount</MenuItem>
-        <MenuItem value="_sort=newPrice&_order=desc">
+        <MenuItem value="_order=desc&_sort=discount" name="Highest Discount">
+          Highest Discount
+        </MenuItem>
+        <MenuItem value="_order=desc&_sort=newPrice" name="Price High To Low">
           Price High To Low
         </MenuItem>
-        <MenuItem value="_sort=newPrice&_order=asc">Price Low To High</MenuItem>
+        <MenuItem value="_order=asc&_sort=newPrice" name="Price Low To High">
+          Price Low To High
+        </MenuItem>
       </Select>
     </FormControlStyled>
   );
 };
 
-export default SortType;
+export default React.memo(SortType);

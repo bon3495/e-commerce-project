@@ -15,6 +15,7 @@ import {
   TitleSkeleton,
 } from '../../../components';
 import { LIMIT_PRODUCTS, scrollToProducts } from '../../../constants';
+import useFetch from '../../../hook/useFetch';
 import useHttp from '../../../hook/useHttp';
 import {
   ContainerStyled,
@@ -36,6 +37,8 @@ const AllProducts = () => {
     _limit: 1,
     _totalRows: 1,
   });
+
+  const [brands, setBrands] = useState([]);
   const { isLoading, sendRequest } = useHttp();
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
@@ -45,6 +48,7 @@ const AllProducts = () => {
       _limit: +params._limit || LIMIT_PRODUCTS,
     };
   }, [location.search]);
+
   // const [filters, setFilters] = useState({
   //   _page: 1,
   //   _limit: LIMIT_PRODUCTS,
@@ -77,7 +81,11 @@ const AllProducts = () => {
       setProductsData(data);
       setPagination(pagination);
     };
+    const handleBrands = data => {
+      setBrands(data);
+    };
     sendRequest(productsApi, handleData, queryParams, 'getAll');
+    sendRequest(productsApi, handleBrands, {}, 'getBrands');
   }, [sendRequest, queryParams]);
 
   const handleChangePagination = (_, page) => {
@@ -144,15 +152,13 @@ const AllProducts = () => {
           _page: 1,
         }),
       });
-
-      console.log(newBrand);
-      console.log(queryParams);
     }
 
     scrollTo();
   };
 
   const handleChangePrice = newPrice => {
+    console.log(newPrice);
     if (Object.keys(newPrice).length === 0) return;
 
     // setFilters(prevFilters => ({
@@ -217,18 +223,33 @@ const AllProducts = () => {
         {!isLoading && (
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} sm={4} md={3}>
-              <SortType onChangeSort={handleChangeSortType} />
+              <SortType
+                onChangeSort={handleChangeSortType}
+                currentSort={
+                  queryString.stringify({
+                    _order: queryParams._order,
+                    _sort: queryParams._sort,
+                  }) || ''
+                }
+              />
             </Grid>
 
             <Grid item xs={12} sm={4} md={3}>
               <FilterBrand
                 onChangeBrand={handleChangeBrands}
                 currentBrand={queryParams.brand}
+                brands={brands}
               />
             </Grid>
 
             <Grid item xs={12} sm={4} md={3}>
-              <FilterPrice onChangePrice={handleChangePrice} />
+              <FilterPrice
+                onChangePrice={handleChangePrice}
+                currentValues={[
+                  +queryParams.newPrice_gte,
+                  +queryParams.newPrice_lte,
+                ]}
+              />
             </Grid>
 
             <Grid item xs={12} sm={12} md={3}>
