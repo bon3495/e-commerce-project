@@ -15,7 +15,6 @@ import {
   TitleSkeleton,
 } from '../../../components';
 import { LIMIT_PRODUCTS, scrollToProducts } from '../../../constants';
-import useFetch from '../../../hook/useFetch';
 import useHttp from '../../../hook/useHttp';
 import {
   ContainerStyled,
@@ -158,7 +157,6 @@ const AllProducts = () => {
   };
 
   const handleChangePrice = newPrice => {
-    console.log(newPrice);
     if (Object.keys(newPrice).length === 0) return;
 
     // setFilters(prevFilters => ({
@@ -243,13 +241,7 @@ const AllProducts = () => {
             </Grid>
 
             <Grid item xs={12} sm={4} md={3}>
-              <FilterPrice
-                onChangePrice={handleChangePrice}
-                currentValues={[
-                  +queryParams.newPrice_gte,
-                  +queryParams.newPrice_lte,
-                ]}
-              />
+              <FilterPrice onChangePrice={handleChangePrice} />
             </Grid>
 
             <Grid item xs={12} sm={12} md={3}>

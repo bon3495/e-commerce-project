@@ -14,7 +14,7 @@ import {
   TypographyPriceStyled,
 } from './styles';
 
-const FilterPrice = ({ onChangePrice, currentValues }) => {
+const FilterPrice = ({ onChangePrice }) => {
   const value = useFetch();
   const [priceValue, setPriceValue] = useState(value);
   const [openPriceRange, setOpenPriceRange] = useState(false);
@@ -51,8 +51,6 @@ const FilterPrice = ({ onChangePrice, currentValues }) => {
   useEffect(() => {
     setPriceValue(value);
   }, [value]);
-
-  console.log(priceValue);
 
   return (
     <ClickAwayListener onClickAway={handleClosePriceRange}>
